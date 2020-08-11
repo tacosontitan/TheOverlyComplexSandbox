@@ -10,7 +10,7 @@ namespace Sandbox.Modules.General {
         }
 
         protected override void ProcessResponse(ModuleCommunicationData data) {
-            
+            // TODO, create an interface so this isn't forced on modules that don't need it.
         }
     }
 }
