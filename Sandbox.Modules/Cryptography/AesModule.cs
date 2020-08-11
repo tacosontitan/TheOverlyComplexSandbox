@@ -4,8 +4,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Sandbox.Modules.jdavis1.Cryptography {
-    [ModuleDescription("AES Cryptography Test", "aes", "Tests encrypting and decrypting data using the Aes algorithm.")]
+namespace Sandbox.Modules.Cryptography {
+    [SandboxModule("AES Cryptography Test", "aes", "Tests encrypting and decrypting data using the Aes algorithm.")]
     public class AesModule : SandboxModule {
 
         #region Fields

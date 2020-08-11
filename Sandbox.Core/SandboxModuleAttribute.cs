@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Sandbox.Core {
-    public class ModuleDescriptionAttribute : Attribute {
+    public class SandboxModuleAttribute : Attribute {
 
         #region Properties
 
@@ -13,7 +13,7 @@ namespace Sandbox.Core {
 
         #region Constructors
 
-        public ModuleDescriptionAttribute(string name, string executionKey, string description) {
+        public SandboxModuleAttribute(string name, string executionKey, string description) {
             Name = name;
             ExecutionKey = executionKey;
             Description = description;

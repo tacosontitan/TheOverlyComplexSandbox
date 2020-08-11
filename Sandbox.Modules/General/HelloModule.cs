@@ -1,7 +1,7 @@
 ﻿using Sandbox.Core;
 
 namespace Sandbox.Modules.General {
-    [ModuleDescription("Hello World", "hello", "A simple module to test using reflection to discover modules.")]
+    [SandboxModule("Hello World", "hello", "A simple module to test using reflection to discover modules.")]
     public class HelloModule : SandboxModule {
         public override void Execute() {
             OnExecutionStarted();

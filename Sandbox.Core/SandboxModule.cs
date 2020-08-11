@@ -69,7 +69,7 @@ namespace Sandbox.Core {
         #region Private Methods
 
         private void DiscoverModuleDescription() {
-            ModuleDescriptionAttribute moduleDescription = GetType().GetCustomAttribute<ModuleDescriptionAttribute>();
+            SandboxModuleAttribute moduleDescription = GetType().GetCustomAttribute<SandboxModuleAttribute>();
             if (moduleDescription != null) {
                 Name = moduleDescription.Name;
                 ExecutionKey = moduleDescription.ExecutionKey;
