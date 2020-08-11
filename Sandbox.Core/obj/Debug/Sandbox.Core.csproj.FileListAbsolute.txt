@@ -10,3 +10,9 @@ C:\Users\Aarons\Source\Repos\sandbox\Sandbox.Core\obj\Debug\Sandbox.Core.csprojA
 C:\Users\Aarons\Source\Repos\sandbox\Sandbox.Core\obj\Debug\Sandbox.Core.csproj.CoreCompileInputs.cache
 C:\Users\Aarons\Source\Repos\sandbox\Sandbox.Core\obj\Debug\Sandbox.Core.dll
 C:\Users\Aarons\Source\Repos\sandbox\Sandbox.Core\obj\Debug\Sandbox.Core.pdb
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Core\bin\Debug\Sandbox.Core.dll
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Core\bin\Debug\Sandbox.Core.pdb
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Core\obj\Debug\Sandbox.Core.csprojAssemblyReference.cache
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Core\obj\Debug\Sandbox.Core.csproj.CoreCompileInputs.cache
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Core\obj\Debug\Sandbox.Core.dll
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Core\obj\Debug\Sandbox.Core.pdb

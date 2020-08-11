@@ -16,3 +16,12 @@ C:\Users\Aarons\Source\Repos\sandbox\Sandbox.Modules\obj\Debug\Sandbox.Modules.c
 C:\Users\Aarons\Source\Repos\sandbox\Sandbox.Modules\obj\Debug\Sandbox.Modules.csproj.CopyComplete
 C:\Users\Aarons\Source\Repos\sandbox\Sandbox.Modules\obj\Debug\Sandbox.Modules.dll
 C:\Users\Aarons\Source\Repos\sandbox\Sandbox.Modules\obj\Debug\Sandbox.Modules.pdb
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Modules\bin\Debug\Sandbox.Modules.dll
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Modules\bin\Debug\Sandbox.Modules.pdb
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Modules\bin\Debug\Sandbox.Core.dll
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Modules\bin\Debug\Sandbox.Core.pdb
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Modules\obj\Debug\Sandbox.Modules.csprojAssemblyReference.cache
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Modules\obj\Debug\Sandbox.Modules.csproj.CoreCompileInputs.cache
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Modules\obj\Debug\Sandbox.Modules.csproj.CopyComplete
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Modules\obj\Debug\Sandbox.Modules.dll
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox.Modules\obj\Debug\Sandbox.Modules.pdb

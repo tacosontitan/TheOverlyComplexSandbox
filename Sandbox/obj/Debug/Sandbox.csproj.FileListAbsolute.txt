@@ -22,3 +22,15 @@ C:\Users\Aarons\Source\Repos\sandbox\Sandbox\obj\Debug\Sandbox.csproj.CoreCompil
 C:\Users\Aarons\Source\Repos\sandbox\Sandbox\obj\Debug\Sandbox.csproj.CopyComplete
 C:\Users\Aarons\Source\Repos\sandbox\Sandbox\obj\Debug\Sandbox.exe
 C:\Users\Aarons\Source\Repos\sandbox\Sandbox\obj\Debug\Sandbox.pdb
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\bin\Debug\Sandbox.exe.config
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\bin\Debug\Sandbox.exe
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\bin\Debug\Sandbox.pdb
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\bin\Debug\Sandbox.Core.dll
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\bin\Debug\Sandbox.Modules.dll
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\bin\Debug\Sandbox.Core.pdb
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\bin\Debug\Sandbox.Modules.pdb
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\obj\Debug\Sandbox.csprojAssemblyReference.cache
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\obj\Debug\Sandbox.csproj.CoreCompileInputs.cache
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\obj\Debug\Sandbox.csproj.CopyComplete
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\obj\Debug\Sandbox.exe
+C:\Users\Aarons\Documents\GitHub\sandbox\Sandbox\obj\Debug\Sandbox.pdb
