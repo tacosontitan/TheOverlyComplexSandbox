@@ -5,6 +5,22 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to the Sandbox!</h1>
+    <p class="lead">I'm currently working on the web interface, but please enjoy this list of currently available sandbox modules.</p>
+    <div class="row">
+        <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+                @foreach (Sandbox.Core.SandboxModule module in Model.DiscoveredModules) {
+                    <a class="list-group-item list-group-item-action" id="list-@module.ExecutionKey" data-toggle="list" href="#@module.ExecutionKey" role="tab" aria-controls="home">@module.Name</a>
+                }
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="tab-content" id="nav-tabContent">
+                @foreach (Sandbox.Core.SandboxModule module in Model.DiscoveredModules) {
+                    <div class="tab-pane fade" id="@module.ExecutionKey" role="tabpanel" aria-labelledby="list-@module.ExecutionKey">@module.Description</div>
+                }
+            </div>
+        </div>
+    </div>
 </div>

@@ -37,6 +37,7 @@ namespace Sandbox.Modules {
         public object ErrorColor { get; set; }
         public object InformationColor { get; set; }
         public object DefaultColor { get; set; }
+        public SandboxModule[] Modules => modules.ToArray();
 
         #endregion
 

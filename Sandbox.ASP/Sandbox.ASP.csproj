@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sandbox.Core\Sandbox.Core.csproj" />
+    <ProjectReference Include="..\Sandbox.Modules\Sandbox.Modules.csproj" />
+  </ItemGroup>
+
 </Project>
