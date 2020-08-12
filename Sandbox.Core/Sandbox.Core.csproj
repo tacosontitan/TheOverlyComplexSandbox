@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisplayElement.cs" />
+    <Compile Include="ModuleParameterAttribute.cs" />
     <Compile Include="SandboxModuleAttribute.cs" />
     <Compile Include="ModuleCommunicationData.cs" />
     <Compile Include="ModuleCommunicationType.cs" />
