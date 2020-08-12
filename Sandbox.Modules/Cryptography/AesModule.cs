@@ -8,65 +8,32 @@ namespace Sandbox.Modules.Cryptography {
     [SandboxModule("AES Cryptography Test", "aes", "Tests encrypting and decrypting data using the Aes algorithm.")]
     public class AesModule : SandboxModule {
 
-        #region Fields
+        #region Parameters
 
-        private byte encryptionOffset = 0;
-        private string encryptionKey = string.Empty;
-        private string dataToEncrypt = string.Empty;
+        [ModuleParameter("Encryption Key", "What would you like your encryption key to be?", DisplayElement.Textbox, Required = true)]
+        public string EncryptionKey { get; set; }
+        [ModuleParameter("Encryption Offset", "How many bytes should the encrypted data be shifted by?", DisplayElement.Textbox, Required = true)]
+        public byte EncryptionOffset { get; set; }
+        [ModuleParameter("Data To Encrypt", "What data should be encrypted?", DisplayElement.RichTextbox, Required = true)]
+        public string DataToEncrypt { get; set; }
 
         #endregion
 
         #region Module Execution
 
-        public override void Execute() {
-            OnExecutionStarted();
-            try {
-                BeginSteppedExecution(this);
-            } catch (Exception e) {
-                OnExecutionFailed(new ModuleCommunicationData(ModuleCommunicationType.Failure, e));
-            } finally {
-                OnExecutionCompleted();
-            }
-        }
-        protected override void ProcessResponse(ModuleCommunicationData data) => Step(this, data);
-
-        #endregion
-
-        #region Execution Steps
-
-        [ModuleStep(0)]
-        public void RequestEncryptionKey(ModuleCommunicationData data) => RequestInput(ModuleCommunicationType.None, "Please enter a key to encrypt data with.");
-        [ModuleStep(1)]
-        public void StoreEncryptionKey(ModuleCommunicationData data) {
-            byte[] encryptionKeyAsBytes = HashEncryptionKey(data.Data.ToString());
-            encryptionKey = Convert.ToBase64String(encryptionKeyAsBytes);
-            Step(this, data);
-        }
-        [ModuleStep(2)]
-        public void RequestOffset(ModuleCommunicationData data) => RequestInput(ModuleCommunicationType.None, "How many bytes should the encrypted data be shifted by?");
-        [ModuleStep(3)]
-        public void TryStoreOffset(ModuleCommunicationData data) {
-            if (byte.TryParse(data.Data.ToString(), out byte offset)) {
-                encryptionOffset = offset;
-                Step(this, data);
-            } else
-                ReprocessPreviousStep(this, data);
-        }
-        [ModuleStep(4)]
-        public void RequestDataToEncrypt(ModuleCommunicationData data) => RequestInput(ModuleCommunicationType.None, "What data should be encrypted?");
-        [ModuleStep(5)]
-        public void EncryptAndDecryptData(ModuleCommunicationData data) {
-            dataToEncrypt = data.Data.ToString();
+        protected override void Execute() {
+            byte[] encryptionKeyAsBytes = HashEncryptionKey(EncryptionKey);
+            EncryptionKey = Convert.ToBase64String(encryptionKeyAsBytes);
 
             // Encrypt the data.
-            SendResponse(ModuleCommunicationType.Information, $"Encrypting: {dataToEncrypt}");
-            string encryptedValue = Encrypt(encryptionKey, dataToEncrypt, encryptionOffset);
-            SendResponse(ModuleCommunicationType.Success, $"Result: {encryptedValue}");
+            SendResponse(SandboxEventType.Information, $"Encrypting: {DataToEncrypt}");
+            string encryptedValue = Encrypt(EncryptionKey, DataToEncrypt, EncryptionOffset);
+            SendResponse(SandboxEventType.Success, $"Result: {encryptedValue}");
 
             // Decrypt the data.
-            SendResponse(ModuleCommunicationType.Information, $"Decrypting the result.");
-            string decryptedValue = Decrypt(encryptionKey, encryptedValue, encryptionOffset);
-            SendResponse(ModuleCommunicationType.Success, $"Result: {decryptedValue}");
+            SendResponse(SandboxEventType.Information, $"Decrypting the result.");
+            string decryptedValue = Decrypt(EncryptionKey, encryptedValue, EncryptionOffset);
+            SendResponse(SandboxEventType.Success, $"Result: {decryptedValue}");
         }
 
         #endregion

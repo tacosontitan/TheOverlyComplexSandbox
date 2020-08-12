@@ -6,16 +6,15 @@ using System.Reflection;
 namespace Sandbox.Core {
     public abstract class SandboxModule {
 
-        #region Field
+        #region Fields
 
-        private bool containsSteps = false;
-        private int currentStep = 0;
-        private MethodInfo[] executionSteps = null;
+        private PropertyInfo[] parameters;
 
         #endregion
 
         #region Properties
 
+        public bool HasParameters { get; private set; } = false;
         public string Name { get; private set; }
         public string ExecutionKey { get; private set; }
         public string Description { get; private set; }
@@ -26,43 +25,49 @@ namespace Sandbox.Core {
 
         public SandboxModule() {
             DiscoverModuleDescription();
-            DiscoverModuleSteps();
+            DiscoverModuleParameters();
         }
 
         #endregion
 
         #region Public Methods
 
-        public abstract void Execute();
-        public void CaptureResponse(ModuleCommunicationData response) {
-            if (string.Equals("exit", response.Data.ToString(), StringComparison.InvariantCultureIgnoreCase)) {
-                OnExecutionCancelled();
-                return;
+        public void Run() {
+            OnExecutionStarted();
+
+            if (HasParameters) {
+                foreach (PropertyInfo parameter in parameters) {
+                    bool parameterSet = false;
+                    do {
+                        ModuleParameterAttribute description = parameter.GetCustomAttribute<ModuleParameterAttribute>();
+                        var instance = Convert.ChangeType(this, GetType());
+                        SandboxEventArgs eventArgs = new SandboxEventArgs(parameter.GetValue(instance), description.RequestMessage, SandboxEventType.None);
+                        RequestInput(eventArgs);
+
+                        try {
+                            parameter.SetValue(instance, Convert.ChangeType(eventArgs.Data, parameter.PropertyType));
+                            parameterSet = true;
+                        } catch {
+                            SendResponse(SandboxEventType.Failure, $"The response received was invalid.");
+                            if (!description.Required)
+                                parameterSet = true;
+                        }
+                    } while (!parameterSet);
+                }
             }
 
-            ProcessResponse(response);
+            Execute();
+            OnExecutionCompleted();
         }
 
         #endregion
 
         #region Protected Methods
 
-        protected void BeginSteppedExecution(object sender) => Step(sender, new ModuleCommunicationData(ModuleCommunicationType.None, null));
-        protected void Step(object sender, ModuleCommunicationData data) {
-            if (currentStep < executionSteps.Length) {
-                executionSteps[currentStep++].Invoke(sender, new object[] { data });
-                return;
-            }
+        protected abstract void Execute();
 
-            OnExecutionCompleted(data);
-        }
-        protected void RequestInput(ModuleCommunicationType communicationType, object data) => OnInputRequested(new ModuleCommunicationData(communicationType, data));
-        protected abstract void ProcessResponse(ModuleCommunicationData data);
-        protected void ReprocessPreviousStep(object sender, ModuleCommunicationData data) {
-            currentStep--;
-            Step(sender, data);
-        }
-        protected void SendResponse(ModuleCommunicationType responseType, object data) => OnResponseReceived(new ModuleCommunicationData(responseType, data));
+        protected void RequestInput(SandboxEventArgs eventArgs) => OnInputRequested(eventArgs);
+        protected void SendResponse(SandboxEventType responseType, string message) => OnResponseReceived(new SandboxEventArgs(null, message, responseType));
 
         #endregion
 
@@ -76,15 +81,13 @@ namespace Sandbox.Core {
                 Description = moduleDescription.Description;
             }
         }
-        private void DiscoverModuleSteps() {
+        private void DiscoverModuleParameters() {
             try {
-                IEnumerable<MethodInfo> methods = GetType().GetMethods().Where(w => w.GetCustomAttribute<ModuleStepAttribute>() != null);
-                executionSteps = methods.OrderBy(o => o.GetCustomAttribute<ModuleStepAttribute>().StepNumber).ToArray();
-
-                if (executionSteps == null || executionSteps?.Length == 0)
-                    containsSteps = false;
+                parameters = GetType().GetProperties().Where(w => w.GetCustomAttribute<ModuleParameterAttribute>() != null).ToArray();
+                if (parameters != null && parameters?.Length > 0)
+                    HasParameters = true;
             } catch {
-                containsSteps = false;
+                HasParameters = false;
             }
         }
 
@@ -92,27 +95,27 @@ namespace Sandbox.Core {
 
         #region Execution Events
 
-        public event EventHandler<ModuleCommunicationData> ExecutionStarted;
-        protected virtual void OnExecutionStarted(ModuleCommunicationData response = null) {
-            ExecutionStarted?.Invoke(this, new ModuleCommunicationData(ModuleCommunicationType.Information, $"The {Name} module has started execution."));
+        public event EventHandler<SandboxEventArgs> ExecutionStarted;
+        protected virtual void OnExecutionStarted(SandboxEventArgs response = null) {
+            ExecutionStarted?.Invoke(this, new SandboxEventArgs(null, $"The {Name} module has started execution.", SandboxEventType.Information));
             if (response != null)
                 ExecutionStarted?.Invoke(this, response);
         }
-        public event EventHandler<ModuleCommunicationData> ExecutionCancelled;
-        protected virtual void OnExecutionCancelled(ModuleCommunicationData response = null) {
-            ExecutionCancelled?.Invoke(this, new ModuleCommunicationData(ModuleCommunicationType.Information, $"The {Name} module has successfully stopped execution."));
+        public event EventHandler<SandboxEventArgs> ExecutionCancelled;
+        protected virtual void OnExecutionCancelled(SandboxEventArgs response = null) {
+            ExecutionCancelled?.Invoke(this, new SandboxEventArgs(null, $"The {Name} module has successfully stopped execution.", SandboxEventType.Information));
             if (response != null)
                 ExecutionStarted?.Invoke(this, response);
         }
-        public event EventHandler<ModuleCommunicationData> ExecutionCompleted;
-        protected virtual void OnExecutionCompleted(ModuleCommunicationData response = null) {
-            ExecutionCompleted?.Invoke(this, new ModuleCommunicationData(ModuleCommunicationType.Information, $"The {Name} module has completed execution."));
+        public event EventHandler<SandboxEventArgs> ExecutionCompleted;
+        protected virtual void OnExecutionCompleted(SandboxEventArgs response = null) {
+            ExecutionCompleted?.Invoke(this, new SandboxEventArgs(null, $"The {Name} module has completed execution.", SandboxEventType.Success));
             if (response != null)
                 ExecutionStarted?.Invoke(this, response);
         }
-        public event EventHandler<ModuleCommunicationData> ExecutionFailed;
-        protected virtual void OnExecutionFailed(ModuleCommunicationData response = null) {
-            ExecutionFailed?.Invoke(this, new ModuleCommunicationData(ModuleCommunicationType.Information, $"The {Name} module failed."));
+        public event EventHandler<SandboxEventArgs> ExecutionFailed;
+        protected virtual void OnExecutionFailed(SandboxEventArgs response = null) {
+            ExecutionFailed?.Invoke(this, new SandboxEventArgs(null, $"The {Name} module failed.", SandboxEventType.Failure));
             if (response != null)
                 ExecutionStarted?.Invoke(this, response);
         }
@@ -121,10 +124,10 @@ namespace Sandbox.Core {
 
         #region Messaging Events
 
-        public event EventHandler<ModuleCommunicationData> InputRequested;
-        protected virtual void OnInputRequested(ModuleCommunicationData request) => InputRequested?.Invoke(this, request);
-        public event EventHandler<ModuleCommunicationData> ResponseReceived;
-        protected virtual void OnResponseReceived(ModuleCommunicationData response) => ResponseReceived?.Invoke(this, response);
+        public event EventHandler<SandboxEventArgs> InputRequested;
+        protected virtual void OnInputRequested(SandboxEventArgs eventArgs) => InputRequested?.Invoke(this, eventArgs);
+        public event EventHandler<SandboxEventArgs> ResponseReceived;
+        protected virtual void OnResponseReceived(SandboxEventArgs response) => ResponseReceived?.Invoke(this, response);
 
         #endregion
 

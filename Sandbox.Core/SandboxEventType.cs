@@ -1,5 +1,5 @@
 ﻿namespace Sandbox.Core {
-    public enum ModuleCommunicationType {
+    public enum SandboxEventType {
         None,
         Information,
         Warning,

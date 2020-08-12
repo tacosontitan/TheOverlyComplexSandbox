@@ -43,10 +43,9 @@
   <ItemGroup>
     <Compile Include="DisplayElement.cs" />
     <Compile Include="ModuleParameterAttribute.cs" />
+    <Compile Include="SandboxEventArgs.cs" />
     <Compile Include="SandboxModuleAttribute.cs" />
-    <Compile Include="ModuleCommunicationData.cs" />
-    <Compile Include="ModuleCommunicationType.cs" />
-    <Compile Include="ModuleStepAttribute.cs" />
+    <Compile Include="SandboxEventType.cs" />
     <Compile Include="SandboxModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

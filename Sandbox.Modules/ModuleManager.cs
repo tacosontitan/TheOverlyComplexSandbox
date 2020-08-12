@@ -58,14 +58,13 @@ namespace Sandbox.Modules {
                     module.ExecutionCancelled += Module_ExecutionCancelled;
                     module.InputRequested += Module_RequestReceived;
                     module.ResponseReceived += Module_ResponseReceived;
-                    module.Execute();
+                    module.Run();
                     return true;
                 } catch { return false; }
             }
 
             return false;
         }
-        public void ProvideResponse(SandboxModule recipient, ModuleCommunicationData response) => recipient.CaptureResponse(response);
 
         #endregion
 
@@ -81,29 +80,38 @@ namespace Sandbox.Modules {
 
         #region Module Events
 
-        private void Module_ExecutionStarted(object sender, ModuleCommunicationData e) => OnExecutionStarted(sender, e);
-        private void Module_ExecutionCompleted(object sender, ModuleCommunicationData e) => OnExecutionCompleted(sender, e);
-        private void Module_ExecutionFailed(object sender, ModuleCommunicationData e) => OnExecutionFailed(sender, e);
-        private void Module_ExecutionCancelled(object sender, ModuleCommunicationData e) => OnExecutionCancelled(sender, e);
-        private void Module_RequestReceived(object sender, ModuleCommunicationData e) => OnRequestReceived(sender, e);
-        private void Module_ResponseReceived(object sender, ModuleCommunicationData e) => OnResponseReceived(sender, e);
+        private void Module_ExecutionStarted(object sender, SandboxEventArgs e) => OnExecutionStarted(sender, e);
+        private void Module_ExecutionCompleted(object sender, SandboxEventArgs e) => OnExecutionCompleted(sender, e);
+        private void Module_ExecutionFailed(object sender, SandboxEventArgs e) => OnExecutionFailed(sender, e);
+        private void Module_ExecutionCancelled(object sender, SandboxEventArgs e) => OnExecutionCancelled(sender, e);
+        private void Module_RequestReceived(object sender, SandboxEventArgs e) => OnRequestReceived(sender, e);
+        private void Module_ResponseReceived(object sender, SandboxEventArgs e) => OnResponseReceived(sender, e);
 
         #endregion
 
         #region Events
 
-        public event EventHandler<ModuleCommunicationData> ExecutionStarted;
-        protected virtual void OnExecutionStarted(object sender, ModuleCommunicationData response) => ExecutionStarted?.Invoke(sender, response);
-        public event EventHandler<ModuleCommunicationData> ExecutionCompleted;
-        protected virtual void OnExecutionCompleted(object sender, ModuleCommunicationData response) => ExecutionCompleted?.Invoke(sender, response);
-        public event EventHandler<ModuleCommunicationData> ExecutionFailed;
-        protected virtual void OnExecutionFailed(object sender, ModuleCommunicationData response) => ExecutionFailed?.Invoke(sender, response);
-        public event EventHandler<ModuleCommunicationData> ExecutionCancelled;
-        protected virtual void OnExecutionCancelled(object sender, ModuleCommunicationData response) => ExecutionCancelled?.Invoke(sender, response);
-        public event EventHandler<ModuleCommunicationData> RequestReceived;
-        protected virtual void OnRequestReceived(object sender, ModuleCommunicationData response) => RequestReceived?.Invoke(sender, response);
-        public event EventHandler<ModuleCommunicationData> ResponseReceived;
-        protected virtual void OnResponseReceived(object sender, ModuleCommunicationData response) => ResponseReceived?.Invoke(sender, response);
+        public event EventHandler<SandboxEventArgs> ExecutionStarted;
+        protected virtual void OnExecutionStarted(object sender, SandboxEventArgs response) => ExecutionStarted?.Invoke(sender, response);
+        public event EventHandler<SandboxEventArgs> ExecutionCompleted;
+        protected virtual void OnExecutionCompleted(object sender, SandboxEventArgs response) {
+            ExecutionCompleted?.Invoke(sender, response);
+            SandboxModule module = sender as SandboxModule;
+            module.ExecutionStarted -= Module_ExecutionStarted;
+            module.ExecutionFailed -= Module_ExecutionFailed;
+            module.ExecutionCompleted -= Module_ExecutionCompleted;
+            module.ExecutionCancelled -= Module_ExecutionCancelled;
+            module.InputRequested -= Module_RequestReceived;
+            module.ResponseReceived -= Module_ResponseReceived;
+        }
+        public event EventHandler<SandboxEventArgs> ExecutionFailed;
+        protected virtual void OnExecutionFailed(object sender, SandboxEventArgs response) => ExecutionFailed?.Invoke(sender, response);
+        public event EventHandler<SandboxEventArgs> ExecutionCancelled;
+        protected virtual void OnExecutionCancelled(object sender, SandboxEventArgs response) => ExecutionCancelled?.Invoke(sender, response);
+        public event EventHandler<SandboxEventArgs> RequestReceived;
+        protected virtual void OnRequestReceived(object sender, SandboxEventArgs eventArgs) => RequestReceived?.Invoke(sender, eventArgs);
+        public event EventHandler<SandboxEventArgs> ResponseReceived;
+        protected virtual void OnResponseReceived(object sender, SandboxEventArgs response) => ResponseReceived?.Invoke(sender, response);
 
         #endregion
 

@@ -66,45 +66,43 @@ namespace Sandbox {
 
         #region Module Manager Events
 
-        private static void Instance_ExecutionStarted(object sender, ModuleCommunicationData e) => WriteResponseAsLine(e);
-        private static void Instance_ExecutionCancelled(object sender, ModuleCommunicationData e) {
+        private static void Instance_ExecutionStarted(object sender, SandboxEventArgs e) => WriteResponseAsLine(e);
+        private static void Instance_ExecutionCancelled(object sender, SandboxEventArgs e) {
             wasCommandCanceled = true;
             WriteResponseAsLine(e);
         }
-        private static void Instance_ExecutionCompleted(object sender, ModuleCommunicationData e) => WriteResponseAsLine(e);
-        private static void Instance_ExecutionFailed(object sender, ModuleCommunicationData e) => WriteResponseAsLine(e);
-        private static void Instance_RequestReceived(object sender, ModuleCommunicationData e) {
+        private static void Instance_ExecutionCompleted(object sender, SandboxEventArgs e) => WriteResponseAsLine(e);
+        private static void Instance_ExecutionFailed(object sender, SandboxEventArgs e) => WriteResponseAsLine(e);
+        private static void Instance_RequestReceived(object sender, SandboxEventArgs e) {
             WriteRequest(e);
-            ModuleCommunicationData response = new ModuleCommunicationData(ModuleCommunicationType.None, Console.ReadLine());
-            ModuleManager.Instance.ProvideResponse(sender as SandboxModule, response);
+            Console.ForegroundColor = (ConsoleColor)ModuleManager.Instance.InformationColor;
+            e.Data = Console.ReadLine();
+            Console.ForegroundColor = (ConsoleColor)ModuleManager.Instance.DefaultColor;
         }
-        private static void Instance_ResponseReceived(object sender, ModuleCommunicationData e) => WriteResponseAsLine(e);
+        private static void Instance_ResponseReceived(object sender, SandboxEventArgs e) => WriteResponseAsLine(e);
 
         #endregion
 
         #region Helper Methods
 
-        private static void WriteRequest(ModuleCommunicationData request) {
-            Console.ForegroundColor = GetConsoleColorForResponseType(request);
-            Console.Write($"{request.Data} ");
+        private static void WriteRequest(SandboxEventArgs e) {
+            Console.ForegroundColor = GetConsoleColorForResponseType(e);
+            Console.Write($"{e.Message} ");
             Console.ForegroundColor = (ConsoleColor)ModuleManager.Instance.DefaultColor;
         }
-        private static void WriteResponseAsLine(ModuleCommunicationData response) {
-            Console.ForegroundColor = GetConsoleColorForResponseType(response);
-            Console.WriteLine(response.Data);
+        private static void WriteResponseAsLine(SandboxEventArgs e) {
+            Console.ForegroundColor = GetConsoleColorForResponseType(e);
+            Console.WriteLine(e.Message);
             Console.ForegroundColor = (ConsoleColor)ModuleManager.Instance.DefaultColor;
         }
-        public static ConsoleColor GetConsoleColorForResponseType(ModuleCommunicationData response) {
-            ConsoleColor messageColor = (ConsoleColor)ModuleManager.Instance.DefaultColor;
-            switch (response.CommunicationType) {
-                case ModuleCommunicationType.Success: messageColor = (ConsoleColor)ModuleManager.Instance.SuccessColor; break;
-                case ModuleCommunicationType.Warning: messageColor = (ConsoleColor)ModuleManager.Instance.WarningColor; break;
-                case ModuleCommunicationType.Failure: messageColor = (ConsoleColor)ModuleManager.Instance.ErrorColor; break;
-                case ModuleCommunicationType.Information: messageColor = (ConsoleColor)ModuleManager.Instance.InformationColor; break;
-                default: messageColor = (ConsoleColor)ModuleManager.Instance.DefaultColor; break;
+        public static ConsoleColor GetConsoleColorForResponseType(SandboxEventArgs e) {
+            switch (e.EventType) {
+                case SandboxEventType.Success: return (ConsoleColor)ModuleManager.Instance.SuccessColor;
+                case SandboxEventType.Warning: return (ConsoleColor)ModuleManager.Instance.WarningColor;
+                case SandboxEventType.Failure: return (ConsoleColor)ModuleManager.Instance.ErrorColor;
+                case SandboxEventType.Information: return (ConsoleColor)ModuleManager.Instance.InformationColor;
+                default: return (ConsoleColor)ModuleManager.Instance.DefaultColor;
             }
-
-            return messageColor;
         }
 
         #endregion

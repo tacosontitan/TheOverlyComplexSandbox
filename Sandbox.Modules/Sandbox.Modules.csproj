@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Cryptography\AesModule.cs" />
     <Compile Include="General\HelloModule.cs" />
+    <Compile Include="General\ParameterTestModule.cs" />
     <Compile Include="ModuleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
