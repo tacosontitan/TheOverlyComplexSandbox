@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sandbox.Modules.General {
-    [SandboxModule("Module Parameter Attribute Test", "params", "Tests the module parameter attribute object.")]
+namespace Sandbox.Modules.General.Sandbox_Tests {
+    [SandboxModule("Parameter Attribute Test", "params", "Tests the module parameter attribute object.")]
     public class ParameterTestModule : SandboxModule {
 
         #region Parameters

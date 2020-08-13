@@ -4,23 +4,62 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <img style="width: 100%;" src="https://assets.codepen.io/2940219/Sandbox+Front.png" />
-    <h1 class="display-4">Welcome to the Sandbox!</h1>
-    <p class="lead">I'm currently working on the web interface, but please enjoy this list of currently available sandbox modules.</p>
-    <div class="row">
-        <div class="col-4">
-            <div class="list-group" id="list-tab" role="tablist">
-                @foreach (Sandbox.Core.SandboxModule module in Model.DiscoveredModules) {
-                    <a class="list-group-item list-group-item-action" id="list-@module.ExecutionKey" data-toggle="list" href="#@module.ExecutionKey" role="tab" aria-controls="home">@module.Name</a>
-                }
+<div id="sideNav" class="sidenav">
+    <ul class="module-list">
+        <li>
+            <p class="lead text-center">Modules</p>
+        </li>
+        @foreach (string category in Model.ModuleCategories) {
+            <li>
+                <p class="lead accordion txt-default">@category</p>
+                <ul class="sub-modules">
+                    @foreach (Sandbox.Core.SandboxModule module in Model.DiscoveredModules.Where(w => w.Category == category)) {
+                        <li class="txt-default" data-toggle="modal" data-target="#moduleModal" onclick="populateModal('@module.ExecutionKey', '@module.Name', '@module.Description.Replace("'", "\\'")');">
+                            @module.Name
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</div>
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main" class="main-container">
+    <div class="text-center">
+        <img style="width: 100%; margin-top: 15px;" src="https://assets.codepen.io/2940219/Sandbox+Front_1.png" />
+        <h1 class="display-4">Welcome to the Sandbox!</h1>
+        <p class="lead">I'm currently working on the web interface, but please enjoy this list of currently available sandbox modules.</p>
+        <span class="btn btn-light d-sm-none" onclick="openNav()">Open Command List</span>
+        <div class="row">
+            <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                    @foreach (Sandbox.Core.SandboxModule module in Model.DiscoveredModules) {
+                        <div class="tab-pane fade" id="@module.ExecutionKey" role="tabpanel" aria-labelledby="list-@module.ExecutionKey">@module.Description</div>
+                    }
+                </div>
             </div>
         </div>
-        <div class="col-8">
-            <div class="tab-content" id="nav-tabContent">
-                @foreach (Sandbox.Core.SandboxModule module in Model.DiscoveredModules) {
-                    <div class="tab-pane fade" id="@module.ExecutionKey" role="tabpanel" aria-labelledby="list-@module.ExecutionKey">@module.Description</div>
-                }
+    </div>
+</div>
+
+@* Module Modal *@
+<div class="modal fade txt-default" id="moduleModal" tabindex="-1" role="dialog" aria-labelledby="moduleModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="moduleModalTitle">MODULE TITLE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="lead" id="moduleModalDescription">MODULE DESCRIPTION</p>
+                <div id="moduleModalParameters"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success bg-success" id="moduleModalExecuteButton" data-moduleKey="" onclick="executeModule(); return false;">Execute</button>
             </div>
         </div>
     </div>
@@ -33,4 +72,135 @@
         background-size: cover;
         background-position: center;
     }
+
+    .display-1,
+    .display-2,
+    .display-3,
+    .display-4 {
+        font-family: "Quicksand", cursive;
+    }
+
+    .lead {
+        font-family: "Open Sans Condensed", sans-serif;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .module-list {
+        height: calc(100% - 20px);
+        position: fixed;
+        z-index: 1;
+        top: 10px;
+        left: 10px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 30%;
+        min-width: 300px;
+        max-width: 400px;
+    }
+
+        .module-list > li {
+            margin: 10px;
+        }
+
+            .module-list > li > .accordion {
+                padding: 15px;
+                margin: 0;
+                background-color: #fff;
+                border-radius: 5px;
+                transition: all 0.25s linear;
+                cursor: pointer;
+            }
+
+                .module-list > li > .accordion:hover {
+                    background-color: #fff;
+                }
+
+            .module-list > li > p.active {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+        .module-list .sub-modules {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #fffc;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+            .module-list .sub-modules > li {
+                padding: 15px 30px;
+                transition: 0.25s all linear;
+                cursor: pointer;
+            }
+
+                .module-list .sub-modules > li:not(:last-child) {
+                    border-bottom: 1px solid #3335;
+                }
+
+                .module-list .sub-modules > li:hover {
+                    background-color: #fff;
+                }
+
+    .accordion:after {
+        content: "\02795"; /* Unicode character for "plus" sign (+) */
+        font-size: 10px;
+        float: right;
+        margin-left: 5px;
+    }
+
+    .active:after {
+        content: "\2796"; /* Unicode character for "minus" sign (-) */
+    }
 </style>
+<script>
+    var sideNav = document.getElementById("sideNav");
+    function openNav() {
+        sideNav.classList.add('active');
+    }
+    function closeNav() {
+        sideNav.classList.remove('active');
+    }
+    function populateModal(executionKey, moduleName, moduleDescription) {
+        document.getElementById("moduleModalExecuteButton").dataset.moduleKey = executionKey;
+        document.getElementById("moduleModalTitle").innerText = moduleName;
+        document.getElementById("moduleModalDescription").innerText = moduleDescription;
+    }
+    function executeModule() {
+        var executionKey = document.getElementById("moduleModalExecuteButton").dataset.moduleKey;
+        $.ajax({
+            type: "POST",
+            url: "/Modules/Execute?key=" + executionKey,
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ key: executionKey.toString() }),
+            dataType: 'json',
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            },
+            success: function (result) {
+                alert("We returned: " + result);
+            }
+        });
+    }
+
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+</script>

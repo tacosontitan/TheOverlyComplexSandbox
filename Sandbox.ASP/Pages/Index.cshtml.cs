@@ -11,16 +11,38 @@ using Sandbox.Modules;
 namespace Sandbox.ASP.Pages {
     public class IndexModel : PageModel {
 
-        public SandboxModule[] DiscoveredModules => ModuleManager.Instance.Modules;
+        #region Fields
 
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger) {
-            _logger = logger;
-        }
+        #endregion
 
+        #region Properties
+
+        public string[] ModuleCategories { get; private set; }
+        public SandboxModule[] DiscoveredModules => ModuleManager.Instance.Modules;
+
+        #endregion
+
+        #region Page Setup
+
+        public IndexModel(ILogger<IndexModel> logger) => _logger = logger;
         public void OnGet() {
+            SandboxModule[] firstModuleFromEachCategory = DiscoveredModules.GroupBy(g => g.Category).Select(s => s.First()).ToArray();
+            List<string> categories = new List<string>();
+            foreach (SandboxModule module in firstModuleFromEachCategory)
+                categories.Add(module.Category);
 
+            ModuleCategories = categories.ToArray();
         }
+
+        #endregion
+
+        #region Exposed Methods
+
+        public void ExecuteModule(string executionKey) => ModuleManager.Instance.TryExecute(executionKey);
+
+        #endregion
+
     }
 }

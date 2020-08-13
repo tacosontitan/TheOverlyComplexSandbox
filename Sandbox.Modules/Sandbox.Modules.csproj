@@ -43,7 +43,8 @@
   <ItemGroup>
     <Compile Include="Cryptography\AesModule.cs" />
     <Compile Include="General\HelloModule.cs" />
-    <Compile Include="General\ParameterTestModule.cs" />
+    <Compile Include="General\Sandbox Tests\ParameterTestModule.cs" />
+    <Compile Include="General\Sandbox Tests\NestingTestModule.cs" />
     <Compile Include="ModuleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,5 +54,6 @@
       <Name>Sandbox.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

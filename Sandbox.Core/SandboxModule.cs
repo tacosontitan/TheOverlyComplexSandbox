@@ -16,6 +16,7 @@ namespace Sandbox.Core {
 
         public bool HasParameters { get; private set; } = false;
         public string Name { get; private set; }
+        public string Category { get; private set; }
         public string ExecutionKey { get; private set; }
         public string Description { get; private set; }
 
@@ -74,6 +75,7 @@ namespace Sandbox.Core {
         #region Private Methods
 
         private void DiscoverModuleDescription() {
+            Category = GetType().Namespace.Replace("Sandbox.Modules.", string.Empty).Replace('.', '/').Replace('_', ' ');
             SandboxModuleAttribute moduleDescription = GetType().GetCustomAttribute<SandboxModuleAttribute>();
             if (moduleDescription != null) {
                 Name = moduleDescription.Name;

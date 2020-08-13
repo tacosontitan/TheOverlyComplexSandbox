@@ -1,6 +1,4 @@
-﻿﻿@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|League+Script|Quicksand|Tulpen+One|Wire+One|Audiowide|Changa|Fugaz+One|Lobster|News+Cycle|Nothing+You+Could+Do|Press+Start+2P|Rajdhani|Righteous|Sarpanch&amp;display=swap');
-/* Global Application */
-* {
+﻿* {
     transition: 0.3s all linear;
     font-family: 'News Cycle', sans-serif;
     user-select: none;
@@ -19,3 +17,117 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.sidenav {
+    background-color: #fffc;
+    
+    transition: 0.5s;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+    .sidenav a {
+        padding: 10px 3px;
+        text-decoration: none;
+        font-size: 15px;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .sidenav a:not(:last-child) {
+            border-bottom: 1px solid #3335;
+        }
+
+        .sidenav a:hover {
+            color: #37c !important;
+        }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+#main {
+    margin-left: 300px;
+    transition: margin-left .5s;
+    padding: 10px;
+}
+.modal {
+    background-color: #fffc !important;
+}
+
+@media screen and (max-width: 768px) {
+    .sidenav {
+        width: 0 !important;
+    }
+
+    #main {
+        margin-left: 0;
+    }
+
+    .sidenav.active {
+        width: 100% !important;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+
+/* Color Scheme */
+.txt-default {
+    color: #26547c;
+}
+
+.txt-failure {
+    color: #ef476f;
+}
+
+.txt-success {
+    color: #06d6a0;
+}
+
+.txt-warning {
+    color: #ffd166;
+}
+
+.txt-information {
+    color: #7678ed;
+}
+
+.bg-success {
+    background-color: #06d6a0;
+}
+
+.bg-warning {
+    background-color: #ffd166;
+}
+
+.bg-failure {
+    background-color: #ef476f;
+}
+
+.bg-information {
+    background-color: #7678ed;
+}
+
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    background: #fff5;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: #fffc;
+    border-radius: 5px;
+}
+    ::-webkit-scrollbar-thumb:hover {
+        background: #fff;
+    }
