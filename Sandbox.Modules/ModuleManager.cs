@@ -49,10 +49,21 @@ namespace Sandbox.Modules {
 
         #region Public Methods
 
-        public bool TryExecute(string key) {
-            if (modules.Exists(e => string.Equals(e.ExecutionKey, key, StringComparison.InvariantCultureIgnoreCase))) {
+        public bool Exists(string key) => modules.Exists(e => string.Equals(e.ExecutionKey, key, StringComparison.InvariantCultureIgnoreCase));
+        public bool TryExecute(string key, params ModuleParameter[] parameters) {
+            if (Exists(key)) {
                 try {
                     SandboxModule module = modules.Single(s => string.Equals(s.ExecutionKey, key, StringComparison.InvariantCultureIgnoreCase));
+                    var instance = Convert.ChangeType(module, module.GetType());
+                    PropertyInfo[] moduleParameters = module.GetType().GetProperties().Where(w => w.GetCustomAttribute<ModuleParameterAttribute>() != null).ToArray();
+                    if (moduleParameters != null && moduleParameters.Length > 0) {
+                        foreach (ModuleParameter param in parameters) {
+                            PropertyInfo property = moduleParameters.Single(s => s.Name == param.Name);
+                            dynamic paramValue = Convert.ChangeType(param.Value, property.PropertyType);
+                            property.SetValue(instance, paramValue);
+                        }
+                    }
+
                     module.ExecutionStarted += Module_ExecutionStarted;
                     module.ExecutionFailed += Module_ExecutionFailed;
                     module.ExecutionCompleted += Module_ExecutionCompleted;
@@ -65,6 +76,27 @@ namespace Sandbox.Modules {
             }
 
             return false;
+        }
+        public ModuleParameter[] GetModuleParameters(string key) {
+            List<ModuleParameter> result = new List<ModuleParameter>();
+            SandboxModule module = modules.Single(s => string.Equals(s.ExecutionKey, key, StringComparison.InvariantCultureIgnoreCase));
+            var instance = Convert.ChangeType(module, module.GetType());
+            PropertyInfo[] parameters = module.GetType().GetProperties().Where(w => w.GetCustomAttribute<ModuleParameterAttribute>() != null).ToArray();
+            if (parameters != null && parameters?.Length > 0) {
+                foreach (PropertyInfo parameter in parameters) {
+                    ModuleParameterAttribute description = parameter.GetCustomAttribute<ModuleParameterAttribute>();
+                    result.Add(new ModuleParameter() {
+                        Name = parameter.Name,
+                        DisplayName = description.DisplayName,
+                        DisplayElement = description.DisplayElement,
+                        RequestMessage = description.RequestMessage,
+                        Required = description.Required,
+                        Value = parameter.GetValue(instance)
+                    });
+                }
+            }
+
+            return result.ToArray();
         }
 
         #endregion

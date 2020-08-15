@@ -1,6 +1,8 @@
 ﻿using Sandbox.Core;
 using Sandbox.Modules;
 using System;
+using System.Linq;
+using System.Runtime.Remoting.Contexts;
 
 namespace Sandbox {
     class Program {
@@ -50,17 +52,25 @@ namespace Sandbox {
             int invalidResponses = 0;
             while (!wasCommandCanceled) {
                 Console.Write("Please enter a command: ");
-                string response = Console.ReadLine();
+                string executionKey = Console.ReadLine();
                 Console.WriteLine();
-                if (ModuleManager.Instance.TryExecute(response)) {
-                    Console.WriteLine();
-                    invalidResponses = 0;
-                } else if (++invalidResponses % 3 == 0)
-                    Console.WriteLine(INTRODUCTION_MESSAGE);
+                if (ModuleManager.Instance.Exists(executionKey)) {
+                    ModuleParameter[] parameters = ModuleManager.Instance.GetModuleParameters(executionKey);
+                    foreach (ModuleParameter parameter in parameters) {
+                        WriteRequest(new SandboxEventArgs(null, parameter.RequestMessage, SandboxEventType.None));
+                        parameter.Value = Console.ReadLine();
+                    }
+
+                    if (ModuleManager.Instance.TryExecute(executionKey, parameters)) {
+                        Console.WriteLine();
+                        invalidResponses = 0;
+                    } else if (++invalidResponses % 3 == 0)
+                        Console.WriteLine(INTRODUCTION_MESSAGE);
+                }
             }
         }
 
-        
+
 
         #endregion
 

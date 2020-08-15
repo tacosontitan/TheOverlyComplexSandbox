@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DisplayElement.cs" />
+    <Compile Include="ModuleParameter.cs" />
     <Compile Include="ModuleParameterAttribute.cs" />
     <Compile Include="SandboxEventArgs.cs" />
     <Compile Include="SandboxModuleAttribute.cs" />
