@@ -1,13 +1,8 @@
 ﻿using Sandbox.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Sandbox.Modules.General.Sandbox_Tests {
-    [SandboxModule("Parameter Attribute Test", "params", "Tests the module parameter attribute object.")]
-    public class ParameterTestModule : SandboxModule {
+namespace Sandbox.Modules.General.Parameters {
+    [SandboxModule("Attributes", "attr", "Tests the module parameter attribute object.")]
+    public class AttributeModule : SandboxModule {
 
         #region Parameters
 

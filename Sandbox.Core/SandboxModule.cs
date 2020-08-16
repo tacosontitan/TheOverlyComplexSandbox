@@ -37,7 +37,7 @@ namespace Sandbox.Core {
                 Execute();
                 OnExecutionCompleted();
             } catch (Exception e) {
-                OnExecutionFailed(new SandboxEventArgs(e, e.Message, SandboxEventType.Failure));
+                OnExecutionFailed(new SandboxEventArgs(e, Name, e.Message, SandboxEventType.Failure));
             }
         }
 
@@ -48,7 +48,7 @@ namespace Sandbox.Core {
         protected abstract void Execute();
 
         protected void RequestInput(SandboxEventArgs args) => OnInputRequested(args);
-        protected void SendResponse(SandboxEventType responseType, string message) => OnResponseReceived(new SandboxEventArgs(null, message, responseType));
+        protected void SendResponse(SandboxEventType responseType, string message) => OnResponseReceived(new SandboxEventArgs(null, Name, message, responseType));
 
         #endregion
 
@@ -56,25 +56,25 @@ namespace Sandbox.Core {
 
         public event EventHandler<SandboxEventArgs> ExecutionStarted;
         protected virtual void OnExecutionStarted(SandboxEventArgs args = null) {
-            ExecutionStarted?.Invoke(this, new SandboxEventArgs(null, $"The {Name} module has started execution.", SandboxEventType.Information));
+            ExecutionStarted?.Invoke(this, new SandboxEventArgs(null, Name, $"The {Name} module has started execution.", SandboxEventType.Information));
             if (args != null)
                 ExecutionStarted?.Invoke(this, args);
         }
         public event EventHandler<SandboxEventArgs> ExecutionCancelled;
         protected virtual void OnExecutionCancelled(SandboxEventArgs args = null) {
-            ExecutionCancelled?.Invoke(this, new SandboxEventArgs(null, $"The {Name} module has successfully stopped execution.", SandboxEventType.Information));
+            ExecutionCancelled?.Invoke(this, new SandboxEventArgs(null, Name, $"The {Name} module has successfully stopped execution.", SandboxEventType.Information));
             if (args != null)
                 ExecutionStarted?.Invoke(this, args);
         }
         public event EventHandler<SandboxEventArgs> ExecutionCompleted;
         protected virtual void OnExecutionCompleted(SandboxEventArgs args = null) {
-            ExecutionCompleted?.Invoke(this, new SandboxEventArgs(null, $"The {Name} module has completed execution.", SandboxEventType.Success));
+            ExecutionCompleted?.Invoke(this, new SandboxEventArgs(null, Name, $"The {Name} module has completed execution.", SandboxEventType.Success));
             if (args != null)
                 ExecutionStarted?.Invoke(this, args);
         }
         public event EventHandler<SandboxEventArgs> ExecutionFailed;
         protected virtual void OnExecutionFailed(SandboxEventArgs args = null) {
-            ExecutionFailed?.Invoke(this, new SandboxEventArgs(null, $"The {Name} module failed.", SandboxEventType.Failure));
+            ExecutionFailed?.Invoke(this, new SandboxEventArgs(null, Name, $"The {Name} module failed.", SandboxEventType.Failure));
             if (args != null)
                 ExecutionStarted?.Invoke(this, args);
         }

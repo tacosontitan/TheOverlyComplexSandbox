@@ -57,7 +57,7 @@ namespace Sandbox {
                 if (ModuleManager.Instance.Exists(executionKey)) {
                     ModuleParameter[] parameters = ModuleManager.Instance.GetModuleParameters(executionKey);
                     foreach (ModuleParameter parameter in parameters) {
-                        WriteRequest(new SandboxEventArgs(null, parameter.RequestMessage, SandboxEventType.None));
+                        WriteRequest(new SandboxEventArgs(null, string.Empty, parameter.RequestMessage, SandboxEventType.None));
                         parameter.Value = Console.ReadLine();
                     }
 

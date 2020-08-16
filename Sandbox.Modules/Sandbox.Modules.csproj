@@ -43,8 +43,9 @@
   <ItemGroup>
     <Compile Include="Cryptography\AesModule.cs" />
     <Compile Include="General\HelloModule.cs" />
-    <Compile Include="General\Sandbox Tests\ParameterTestModule.cs" />
-    <Compile Include="General\Sandbox Tests\NestingTestModule.cs" />
+    <Compile Include="General\Parameters\AttributeModule.cs" />
+    <Compile Include="General\Parameters\DisplayElementModule.cs" />
+    <Compile Include="General\Nesting\SecondLevelModule.cs" />
     <Compile Include="ModuleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

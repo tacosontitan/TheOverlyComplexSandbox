@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace Sandbox.Modules.Cryptography {
-    [SandboxModule("AES Cryptography Test", "aes", "Tests encrypting and decrypting data using the Aes algorithm.")]
+    [SandboxModule("AES Cryptography", "aes", "Tests encrypting and decrypting data using the Aes algorithm.")]
     public class AesModule : SandboxModule {
 
         #region Parameters

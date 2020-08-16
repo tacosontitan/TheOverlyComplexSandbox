@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using Sandbox.Core;
 using Sandbox.Modules;
 
@@ -34,13 +37,19 @@ namespace Sandbox.ASP.Pages {
                 categories.Add(module.Category);
 
             ModuleCategories = categories.ToArray();
+            ModuleManager.Instance.ExecutionStarted += QueueEvent;
+            ModuleManager.Instance.ExecutionCancelled += QueueEvent;
+            ModuleManager.Instance.ExecutionFailed += QueueEvent;
+            ModuleManager.Instance.ExecutionCompleted += QueueEvent;
+            ModuleManager.Instance.RequestReceived += QueueEvent;
+            ModuleManager.Instance.ResponseReceived += QueueEvent;
         }
 
         #endregion
 
-        #region Exposed Methods
+        #region Module Manager Events
 
-        public void ExecuteModule(string executionKey) => ModuleManager.Instance.TryExecute(executionKey);
+        private void QueueEvent(object sender, SandboxEventArgs e) => MessageQueue.Instance.Enqueue(e);
 
         #endregion
 

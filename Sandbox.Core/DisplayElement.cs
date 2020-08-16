@@ -14,10 +14,6 @@ namespace Sandbox.Core {
         /// <summary>
         /// Display as a rich textbox.
         /// </summary>
-        RichTextbox,
-        /// <summary>
-        /// Display as a drop down list.
-        /// </summary>
-        DropdownList
+        RichTextbox
     }
 }

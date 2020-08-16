@@ -25,21 +25,13 @@
 </div>
 
 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-<div id="main" class="main-container">
+<div id="main" class="main-container txt-default">
     <div class="text-center">
-        <img style="width: 100%; margin-top: 15px;" src="https://assets.codepen.io/2940219/Sandbox+Front_1.png" />
-        <h1 class="display-4">Welcome to the Sandbox!</h1>
-        <p class="lead">I'm currently working on the web interface, but please enjoy this list of currently available sandbox modules.</p>
-        <span class="btn btn-light d-sm-none" onclick="openNav()">Open Command List</span>
-        <div class="row">
-            <div class="col-8">
-                <div class="tab-content" id="nav-tabContent">
-                    @foreach (Sandbox.Core.SandboxModule module in Model.DiscoveredModules) {
-                        <div class="tab-pane fade" id="@module.ExecutionKey" role="tabpanel" aria-labelledby="list-@module.ExecutionKey">@module.Description</div>
-                    }
-                </div>
-            </div>
-        </div>
+        <img style="width: 50%; margin-top: 15px;" src="https://assets.codepen.io/2940219/Sandbox+Front_1.png" />
+        <h1 class="display-4">Welcome!</h1>
+        <p class="lead">The sandbox is a be a place for learning new concepts, solving new problems, creating new ideas, and testing new theories. To get started, simply choose a module and follow the prompts that follow.<br /><br />Thanks for stopping by!</p>
+        <span class="btn btn-light d-sm-none" onclick="openNav()">Open Module List</span>
+        <ul id="eventList" class="event-list"></ul>
     </div>
 </div>
 
@@ -48,18 +40,18 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="moduleModalTitle">MODULE TITLE</h5>
+                <h5 class="modal-title" id="moduleModalTitle">Sorry about this!</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p class="lead" id="moduleModalDescription">MODULE DESCRIPTION</p>
-                <div id="moduleModalParameters"></div>
+                <p class="lead" id="moduleModalDescription">If you're reading this, then something went wrong while trying to load the selected module. The most likely issue is that the module wasn't properly defined. Common issues are apostrophes in the module name or description.</p>
+                <div id="modalParameterContainer"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success bg-success" id="moduleModalExecuteButton" data-moduleKey="" onclick="executeModule(); return false;">Execute</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="moduleModalExecuteButton" data-moduleKey="" onclick="executeModule(); return false;">Execute</button>
             </div>
         </div>
     </div>
@@ -67,7 +59,6 @@
 
 <style>
     body {
-        color: #fff;
         background-image: url(https://assets.codepen.io/2940219/Mountains.jpg);
         background-size: cover;
         background-position: center;
@@ -110,14 +101,14 @@
             .module-list > li > .accordion {
                 padding: 15px;
                 margin: 0;
-                background-color: #fff;
+                background-color: #000a;
                 border-radius: 5px;
                 transition: all 0.25s linear;
                 cursor: pointer;
             }
 
                 .module-list > li > .accordion:hover {
-                    background-color: #fff;
+                    background-color: #000c;
                 }
 
             .module-list > li > p.active {
@@ -129,7 +120,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.2s ease-out;
-            background-color: #fffc;
+            background-color: #000a;
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;
         }
@@ -145,7 +136,7 @@
                 }
 
                 .module-list .sub-modules > li:hover {
-                    background-color: #fff;
+                    background-color: #000c;
                 }
 
     .accordion:after {
@@ -158,8 +149,50 @@
     .active:after {
         content: "\2796"; /* Unicode character for "minus" sign (-) */
     }
+
+    .event-list {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+        .event-list > .event {
+            background-color: #000c;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+            .event-list > .event > p {
+                margin: 0;
+                font-size: 20px;
+                padding: 0 10px;
+            }
+
+            .event-list > .event > *:first-child {
+                padding-top: 10px;
+            }
+
+            .event-list > .event > *:last-child {
+                padding-bottom: 10px;
+            }
+
+            .event-list > .event > p > span {
+                float: right;
+                font-size: 15px;
+                line-height: 20px;
+            }
+
+            .event-list > .event > .msg {
+                font-size: 18px;
+            }
+
+    .modal-content {
+        background-color: #fff8 !important;
+    }
 </style>
 <script>
+    const DisplayElement = Object.freeze({ Checkbox: 0, Textbox: 1, RichTextbox: 2 });
+    const SandboxEventType = Object.freeze({ None: 0, Information: 1, Warning: 2, Failure: 3, Success: 4 });
     var sideNav = document.getElementById("sideNav");
     function openNav() {
         sideNav.classList.add('active');
@@ -167,29 +200,148 @@
     function closeNav() {
         sideNav.classList.remove('active');
     }
-    function populateModal(executionKey, moduleName, moduleDescription) {
-        document.getElementById("moduleModalExecuteButton").dataset.moduleKey = executionKey;
-        document.getElementById("moduleModalTitle").innerText = moduleName;
-        document.getElementById("moduleModalDescription").innerText = moduleDescription;
-    }
+
+    var moduleParameters = undefined;
     function executeModule() {
         var executionKey = document.getElementById("moduleModalExecuteButton").dataset.moduleKey;
+        var params = modalParameterContainer.children;
+        for (var i = 0; i < moduleParameters.length; i++) {
+            var input = params[i].getElementsByTagName("INPUT")[0];
+            switch (moduleParameters[i].displayElement) {
+                case DisplayElement.RichTextbox: input = params[i].getElementsByTagName("TEXTAREA")[0]; break;
+                default: input = params[i].getElementsByTagName("INPUT")[0]; break;
+            }
+
+            if (moduleParameters[i].displayElement == DisplayElement.Checkbox)
+                moduleParameters[i].value = input.checked;
+            else
+                moduleParameters[i].value = input.value;
+        }
         $.ajax({
             type: "POST",
-            url: "/Modules/Execute?key=" + executionKey,
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({ key: executionKey.toString() }),
+            url: "/Modules/Execute",
+            contentType: 'application/json',
+            data: JSON.stringify({ key: executionKey.toString(), parameters: moduleParameters }),
             dataType: 'json',
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
-            },
-            success: function (result) {
-                alert("We returned: " + result);
-            }
+            error: function (XMLHttpRequest, textStatus, errorThrown) { /* TODO: Add error handling. */ },
+            success: function (result) { }
         });
     }
 
+    // Modal functionality.
+    var modalParameterContainer = document.getElementById("modalParameterContainer");
+    function closeModal() {
+        $('#modalParameterContainer').modal('toggle');
+    }
+    function populateModal(executionKey, moduleName, moduleDescription) {
+        clearModal();
+        document.getElementById("moduleModalExecuteButton").dataset.moduleKey = executionKey;
+        document.getElementById("moduleModalTitle").innerText = moduleName;
+        document.getElementById("moduleModalDescription").innerText = moduleDescription;
+        $.ajax({
+            type: "POST",
+            url: "/Modules/GetParameters?key=" + executionKey,
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ key: executionKey.toString() }),
+            dataType: 'json',
+            error: function (XMLHttpRequest, textStatus, errorThrown) { /* TODO: Add error handling. */ },
+            success: function (result) {
+                moduleParameters = result;
+                for (var i = 0; i < result.length; i++)
+                    addParameterToModal(result[i]);
+            }
+        });
+    }
+    function addParameterToModal(parameter) {
+        var formGroup = document.createElement("DIV");
+        if (parameter.displayElement == DisplayElement.Checkbox)
+            formGroup.classList.add('form-check');
+        else
+            formGroup.classList.add('form-group');
 
+        var input = document.createElement("INPUT");
+        switch (parameter.displayElement) {
+            case DisplayElement.Checkbox: input.setAttribute("type", "checkbox"); break;
+            case DisplayElement.Textbox: input.setAttribute("type", "text"); break;
+            case DisplayElement.RichTextbox: input = document.createElement("TEXTAREA"); break;
+        }
+        input.setAttribute("id", "input" + parameter.name);
+        if (parameter.displayElement == DisplayElement.Checkbox) {
+            input.classList.add('form-check-input');
+        } else {
+            input.classList.add('form-control');
+        }
+
+        var label = document.createElement("LABEL");
+        label.setAttribute("for", "input" + parameter.name);
+        label.innerText = parameter.requestMessage;
+
+        if (parameter.displayElement == DisplayElement.Checkbox) {
+            formGroup.appendChild(input);
+            formGroup.appendChild(label);
+        } else {
+            formGroup.appendChild(label);
+            formGroup.appendChild(input);
+        }
+
+        modalParameterContainer.appendChild(formGroup);
+    }
+    function clearModal() {
+        modalParameterContainer.innerHTML = "";
+    }
+
+    // Fetch Events
+    var eventList = document.getElementById("eventList");
+    var fetchingEvents = false;
+    setInterval(function () {
+        if (!fetchingEvents) {
+            $.ajax({
+                type: "POST",
+                url: "/Queue/GetMessages",
+                contentType: 'application/json',
+                error: function (XMLHttpRequest, textStatus, errorThrown) { fetchingEvents = false; /* TODO: Add error handling. */ },
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        var event = result[i];
+                        var eventItem = document.createElement("LI");
+                        eventItem.className = 'event text-left txt-default';
+
+                        var title = document.createElement("P");
+                        if (event.owningModule != null && event.owningModule.length > 0)
+                            title.innerText = event.owningModule;
+                        else
+                            title.innerText = 'Unknown Module';
+
+                        title.classList.add('lead');
+                        switch (event.eventType) {
+                            case SandboxEventType.Information: title.classList.add('txt-information'); break;
+                            case SandboxEventType.Success: title.classList.add('txt-success'); break;
+                            case SandboxEventType.Warning: title.classList.add('txt-warning'); break;
+                            case SandboxEventType.Failure: title.classList.add('txt-failure'); break;
+                            default: title.classList.add('txt-default'); break;
+                        }
+
+                        var message = document.createElement("P");
+                        message.innerText = event.message;
+                        message.className = 'lead msg';
+
+                        eventItem.appendChild(title);
+                        eventItem.appendChild(message);
+                        eventList.insertBefore(eventItem, eventList.childNodes[0]);
+                    }
+
+                    fetchingEvents = false;
+                }
+            });
+        }
+
+        //<li class="event text-left txt-default">
+        //    <p class="lead txt-information">Module Name <span class="txt-default">8/16/20 10:02:32AM</span></p>
+        //    <p class="lead msg">Event message.</p>
+        //</li>
+    }, 1000);
+
+    // Enable expand and collapse of the category accordions.
     var acc = document.getElementsByClassName("accordion");
     var i;
     for (i = 0; i < acc.length; i++) {

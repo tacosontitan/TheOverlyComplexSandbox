@@ -10,6 +10,7 @@ namespace Sandbox.Core {
         #region Properties
 
         public object Data { get; set; }
+        public string OwningModule { get; set; }
         public string Message { get; set; }
         public SandboxEventType EventType { get; set; }
 
@@ -17,8 +18,9 @@ namespace Sandbox.Core {
 
         #region Constructors
 
-        public SandboxEventArgs(object data, string message, SandboxEventType eventType) {
+        public SandboxEventArgs(object data, string owningModule, string message, SandboxEventType eventType) {
             Data = data;
+            OwningModule = owningModule;
             Message = message;
             EventType = eventType;
         }

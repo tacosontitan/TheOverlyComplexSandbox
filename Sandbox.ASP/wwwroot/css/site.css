@@ -16,6 +16,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: auto;
 }
 
 .sidenav {
@@ -56,7 +57,7 @@ body {
     padding: 10px;
 }
 .modal {
-    background-color: #fffc !important;
+    background-color: #0005 !important;
 }
 
 @media screen and (max-width: 768px) {
@@ -80,7 +81,7 @@ body {
 
 /* Color Scheme */
 .txt-default {
-    color: #26547c;
+    color: #e2e2e2;
 }
 
 .txt-failure {
@@ -114,6 +115,9 @@ body {
 .bg-information {
     background-color: #7678ed;
 }
+.bg-default {
+    background-color: #000c;
+}
 
 
 /* Scrollbar */
@@ -121,13 +125,13 @@ body {
     width: 5px;
 }
 ::-webkit-scrollbar-track {
-    background: #fff5;
+    background: #0005;
     border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb {
-    background: #fffc;
+    background: #000a;
     border-radius: 5px;
 }
     ::-webkit-scrollbar-thumb:hover {
-        background: #fff;
+        background: #000c;
     }
