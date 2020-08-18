@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox.Presentation.Consol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox.Core", "Sandbox.Core\Sandbox.Core.csproj", "{F529D814-BA68-4037-987F-9BB42E82FB95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox.Modules.CSharp", "Sandbox.Modules\Sandbox.Modules.CSharp.csproj", "{DE558A9E-DF06-49A6-B132-4FE5002A8FCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox.Modules.CSharp", "Sandbox.Modules.CSharp\Sandbox.Modules.CSharp.csproj", "{DE558A9E-DF06-49A6-B132-4FE5002A8FCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox.Presentation.WindowsForms", "Sandbox.WinForms\Sandbox.Presentation.WindowsForms.csproj", "{6B2E9D3D-FED7-4C69-997E-DAFE7F4B7EEE}"
 EndProject
