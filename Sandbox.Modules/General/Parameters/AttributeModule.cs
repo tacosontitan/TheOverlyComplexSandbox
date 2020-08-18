@@ -1,7 +1,7 @@
 ﻿using Sandbox.Core;
 
 namespace Sandbox.Modules.CSharp.General.Parameters {
-    [SandboxModule("Attributes", "attr", "Tests the module parameter attribute object.")]
+    [SandboxModule("Attributes", "cs-attributes", "Tests the module parameter attribute object.")]
     public class AttributeModule : SandboxModule {
 
         #region Parameters

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Microsoft.JSInterop;
 using Sandbox.Core;
 using Sandbox.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sandbox.ASP.Pages {
     public class IndexModel : PageModel {

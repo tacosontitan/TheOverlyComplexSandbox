@@ -1,6 +1,6 @@
 Imports Sandbox.Core
 
-<SandboxModule("Demo Module", "vb-demo", "This module is a simple test of integrating the Visual Basic module collection with the module service.")>
+<SandboxModule("Visual Basic Demo Module", "vb-demo", "This module is a simple test of integrating the Visual Basic module collection with the module service.")>
 Public Class DemoModule
     Inherits SandboxModule
 

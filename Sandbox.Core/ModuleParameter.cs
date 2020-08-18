@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sandbox.Core {
+﻿namespace Sandbox.Core {
     public class ModuleParameter {
         public string Name { get; set; }
         public string DisplayName { get; set; }

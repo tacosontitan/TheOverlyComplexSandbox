@@ -1,5 +1,4 @@
 ﻿using Sandbox.Core;
-using System;
 
 namespace $rootnamespace$ {
     [SandboxModule("Module Name", "moduleKey", "Module description.")]
