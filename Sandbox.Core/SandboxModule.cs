@@ -18,7 +18,12 @@ namespace Sandbox.Core {
         #region Constructors
 
         public SandboxModule() {
-            Category = GetType().Namespace.Replace("Sandbox.Modules.", string.Empty).Replace('.', '/').Replace('_', ' ');
+            Category = GetType().Namespace.Replace("Sandbox.Modules.", string.Empty)
+                                          .Replace('.', '/')
+                                          .Replace('_', ' ')
+                                          .Replace("CSharp", "C#")
+                                          .Replace("FSharp", "F#")
+                                          .Replace("CPlusPlus", "C++");
             SandboxModuleAttribute moduleDescription = GetType().GetCustomAttribute<SandboxModuleAttribute>();
             if (moduleDescription != null) {
                 Name = moduleDescription.Name;

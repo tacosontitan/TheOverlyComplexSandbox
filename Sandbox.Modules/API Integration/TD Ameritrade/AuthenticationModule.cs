@@ -1,12 +1,7 @@
 ﻿using Sandbox.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Sandbox.Modules.API_Integration.TD_Ameritrade {
-    [SandboxModule("TD Ameritrade Authentication", "tdam", "Integrates with the TD Ameritrade API.")]
+namespace Sandbox.Modules.CSharp.API_Integration.TD_Ameritrade {
+    [SandboxModule("TD Ameritrade Authentication", "td-auth", "Integrates with the TD Ameritrade API.")]
     public class AuthenticationModule : SandboxModule {
 
         #region Parameters

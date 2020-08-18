@@ -1,6 +1,6 @@
 ﻿using Sandbox.Core;
 
-namespace Sandbox.Modules.General.Parameters {
+namespace Sandbox.Modules.CSharp.General.Parameters {
     [SandboxModule("Display Elements", "test-disp", @"Parameters can utilize the DisplayElement property to adjust how the web and windows forms applications will display them.\n\nAs more element types are supported, this module will be updated to test them. All responses given are simply echoed back to ensure the supplied value was received.")]
     public class DisplayElementModule : SandboxModule {
 

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sandbox.Core;
+using Sandbox.Services;
+using System.Collections.Generic;
 
 namespace Sandbox.ASP {
     [Route("[controller]")]
@@ -16,8 +14,8 @@ namespace Sandbox.ASP {
         public IActionResult GetMessages() {
             List<SandboxEventArgs> args = new List<SandboxEventArgs>();
             try {
-                while (MessageQueue.Instance.Count > 0)
-                    args.Add(MessageQueue.Instance.Dequeue());
+                while (MessageService.Instance.Count > 0)
+                    args.Add(MessageService.Instance.Dequeue());
             } catch {
                 return StatusCode(418);
             }

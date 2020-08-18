@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Sandbox.Modules.API_Integration.TD_Ameritrade {
+namespace Sandbox.Modules.CSharp.API_Integration.TD_Ameritrade {
     public class TDAmeritradeService {
 
         #region Singleton Setup

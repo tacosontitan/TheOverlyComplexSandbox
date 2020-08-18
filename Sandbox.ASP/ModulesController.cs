@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sandbox.Core;
-using Sandbox.Modules;
-using System;
+using Sandbox.Services;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Sandbox.ASP {
     [Route("[controller]")]
@@ -24,7 +21,7 @@ namespace Sandbox.ASP {
                 foreach (ModuleParameter parameter in parameters)
                     parameter.Value = ((JsonElement)parameter.Value).ToString();
 
-                ModuleManager.Instance.TryExecute(deserializedData["key"].ToString(), parameters);
+                ModuleService.Instance.TryExecute(deserializedData["key"].ToString(), parameters);
             } catch {
                 return StatusCode(418);
             }
@@ -37,7 +34,7 @@ namespace Sandbox.ASP {
         public IActionResult GetParameters(string key) {
             ModuleParameter[] parameters;
             try {
-                parameters = ModuleManager.Instance.GetModuleParameters(key);
+                parameters = ModuleService.Instance.GetModuleParameters(key);
             } catch {
                 return StatusCode(418);
             }

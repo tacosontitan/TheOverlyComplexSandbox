@@ -4,7 +4,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Sandbox.Modules.Cryptography {
+namespace Sandbox.Modules.CSharp.Cryptography {
     [SandboxModule("AES Cryptography", "aes", "Tests encrypting and decrypting data using the Aes algorithm.")]
     public class AesModule : SandboxModule {
 

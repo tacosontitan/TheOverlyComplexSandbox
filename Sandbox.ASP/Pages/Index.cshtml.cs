@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using Sandbox.Core;
-using Sandbox.Modules;
+using Sandbox.Services;
 
 namespace Sandbox.ASP.Pages {
     public class IndexModel : PageModel {
@@ -23,7 +23,7 @@ namespace Sandbox.ASP.Pages {
         #region Properties
 
         public string[] ModuleCategories { get; private set; }
-        public SandboxModule[] DiscoveredModules => ModuleManager.Instance.Modules;
+        public SandboxModule[] DiscoveredModules => ModuleService.Instance.Modules;
 
         #endregion
 
@@ -37,19 +37,19 @@ namespace Sandbox.ASP.Pages {
                 categories.Add(module.Category);
 
             ModuleCategories = categories.ToArray();
-            ModuleManager.Instance.ExecutionStarted += QueueEvent;
-            ModuleManager.Instance.ExecutionCancelled += QueueEvent;
-            ModuleManager.Instance.ExecutionFailed += QueueEvent;
-            ModuleManager.Instance.ExecutionCompleted += QueueEvent;
-            ModuleManager.Instance.RequestReceived += QueueEvent;
-            ModuleManager.Instance.ResponseReceived += QueueEvent;
+            ModuleService.Instance.ExecutionStarted += QueueEvent;
+            ModuleService.Instance.ExecutionCancelled += QueueEvent;
+            ModuleService.Instance.ExecutionFailed += QueueEvent;
+            ModuleService.Instance.ExecutionCompleted += QueueEvent;
+            ModuleService.Instance.RequestReceived += QueueEvent;
+            ModuleService.Instance.ResponseReceived += QueueEvent;
         }
 
         #endregion
 
         #region Module Manager Events
 
-        private void QueueEvent(object sender, SandboxEventArgs e) => MessageQueue.Instance.Enqueue(e);
+        private void QueueEvent(object sender, SandboxEventArgs e) => MessageService.Instance.Enqueue(e);
 
         #endregion
 
