@@ -3,10 +3,22 @@
     request.open(httpMethod, uri, true);
     request.setRequestHeader('Content-Type', 'application/json');
     request.onreadystatechange = function () {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
-            success(JSON.parse(this.response));
-        else
-            failure(JSON.parse(this.response));
+        var result = this.response;
+        if (this.status === 200) {
+            if (this.readyState === XMLHttpRequest.DONE) {
+                try {
+                    result = JSON.parse(this.response);
+                } catch { }
+
+                success(result);
+            }
+        } else {
+            try {
+                result = JSON.parse(this.response);
+            } catch { }
+
+            failure(result);
+        }
     }
     if (data != null)
         request.send(data);

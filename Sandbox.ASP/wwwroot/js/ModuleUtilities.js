@@ -13,7 +13,7 @@ function getModuleParameters(id, success, failure) {
     });
 }
 function executeModule(request, success, failure) {
-    callWebService("POST", "Modules/Execute", request, function (result) {
+    callWebService("POST", "Modules/Execute", JSON.stringify(request), function (result) {
         success(result);
     }, function (result) {
         failure(result);

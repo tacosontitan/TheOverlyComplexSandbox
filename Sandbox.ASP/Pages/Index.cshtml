@@ -172,7 +172,7 @@
                     <p id="moduleDescription" class="lead mb-1"></p>
                 </div>
                 <div class="col-12 col-sm-3">
-                    <button type="submit" class="btn btn-primary col-12 mb-1" onclick="executeModule();" data-moduleid="">Execute</button>
+                    <button id="executeButton" type="submit" class="btn btn-primary col-12 mb-1" onclick="execute(this);" data-moduleid="">Execute</button>
                 </div>
             </div>
 
@@ -251,31 +251,6 @@
 </div>
 <script>
     var moduleParameters = undefined;
-    function executeModule() {
-        var executionKey = document.getElementById("moduleModalExecuteButton").dataset.moduleKey;
-        var params = modalParameterContainer.children;
-        for (var i = 0; i < moduleParameters.length; i++) {
-            var input = params[i].getElementsByTagName("INPUT")[0];
-            switch (moduleParameters[i].displayElement) {
-                case DisplayElement.RichTextbox: input = params[i].getElementsByTagName("TEXTAREA")[0]; break;
-                default: input = params[i].getElementsByTagName("INPUT")[0]; break;
-            }
-
-            if (moduleParameters[i].displayElement == DisplayElement.Checkbox)
-                moduleParameters[i].value = input.checked;
-            else
-                moduleParameters[i].value = input.value;
-        }
-        $.ajax({
-            type: "POST",
-            url: "/Modules/Execute",
-            contentType: 'application/json',
-            data: JSON.stringify({ key: executionKey.toString(), parameters: moduleParameters }),
-            dataType: 'json',
-            error: function (XMLHttpRequest, textStatus, errorThrown) { /* TODO: Add error handling. */ },
-            success: function (result) { }
-        });
-    }
     // Fetch Events
     var eventList = document.getElementById("eventList");
     var fetchingEvents = false;
@@ -333,6 +308,7 @@
     var moduleLanguage = document.getElementById("moduleLanguage");
     var moduleDescription = document.getElementById("moduleDescription");
     var moduleTags = document.getElementById("moduleTags");
+    var executeButton = document.getElementById("executeButton");
     function showModuleDetails(sender, id) {
         activateLoader();
         modulesTab.classList.remove("active");
@@ -344,6 +320,7 @@
             moduleLanguage.className = "badge " + result.friendlyLanguage;
             moduleDescription.innerText = result.description;
             moduleTags.innerHTML = "";
+            executeButton.dataset.moduleid = result.id;
             for (let i = 0; i < result.tags.length; i++) {
                 if (result.tags[i].length > 0) {
                     var tag = document.createElement("SPAN");
@@ -355,6 +332,7 @@
 
             getModuleParameters(id, function (result) {
                 document.getElementById("moduleParameters").innerHTML = result.length < 1 ? "There are no parameters for this module." : "";
+                moduleParameters = result;
                 for (let i = 0; i < result.length; i++)
                     addParameterToDetailsTab(result[i]);
 
@@ -373,13 +351,34 @@
     function addParameterToDetailsTab(parameter) {
         document.getElementById("moduleParameters").appendChild(createDisplayElementForParameter(parameter));
     }
+    function execute(sender) {
+        activateLoader();
+        var moduleID = sender.dataset.moduleid;
+        var params = document.getElementById("moduleParameters").children;
+        for (var i = 0; i < moduleParameters.length; i++) {
+            var input = undefined;
+            var container = params[i].getElementsByTagName("DIV")[0];
+            switch (moduleParameters[i].displayElement) {
+                case DisplayElement.RichTextbox: input = container.getElementsByTagName("TEXTAREA")[0]; break;
+                default: input = container.getElementsByTagName("INPUT")[0]; break;
+            }
 
-
-    function showEventLog() {
-        detailsTab.classList.remove("active");
-        detailsTabContent.classList.remove("active");
-
-        eventLogTab.classList.add("active");
-        eventLogTabContent.classList.add("active");
+            if (moduleParameters[i].displayElement == DisplayElement.Checkbox)
+                moduleParameters[i].value = input.checked;
+            else
+                moduleParameters[i].value = input.value;
+        }
+        executeModule({
+            id: moduleID,
+            parameters: moduleParameters
+        }, function (result) {
+                detailsTab.classList.remove("active");
+                detailsTabContent.classList.remove("active");
+                eventLogTab.classList.add("active");
+                eventLogTabContent.classList.add("active");
+                deactivateLoader();
+        }, function (result) {
+                deactivateLoader();
+        });
     }
 </script>

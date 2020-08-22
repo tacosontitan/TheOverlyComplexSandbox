@@ -30,7 +30,7 @@ namespace Sandbox.ASP {
                 return StatusCode(418);
             }
 
-            return Ok();
+            return Ok("The module is now running.");
         }
         [HttpPost("GetDetails")]
         [ProducesResponseType(StatusCodes.Status200OK)]
