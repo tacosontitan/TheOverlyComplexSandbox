@@ -1,6 +1,54 @@
-﻿* {
-    transition: 0.3s all linear;
-    font-family: 'News Cycle', sans-serif;
+﻿@import url('https://fonts.googleapis.com/css2?family=News+Cycle&family=Open+Sans+Condensed:wght@300&family=Poiret+One&family=Quicksand&display=swap');
+
+/* Variables */
+:root {
+    /* Colors */
+    --color-white: #f5f5f5;
+    --color-gray: #191a2c;
+    --color-midnight: #19284f;
+    --color-blue: #1261d1;
+    --color-aqua: #05d9e8;
+    --color-green: #20c997;
+    --color-yellow: #defe47;
+    --color-orange: #ff6e27;
+    --color-purple: #af43be;
+    --color-pink: #ff577d;
+    --color-red: #f33;
+    --color-error: #ff2a6d;
+    --color-warning: #ffcc02;
+    --color-success: #65dc98;
+    /* Fonts */
+    --font-default: 'News Cycle', sans-serif;
+    --font-heading: 'Quicksand', cursive;
+    --font-description: 'Open Sans Condensed', sans-serif;
+    --font-poiret: 'Poiret One', cursive;
+}
+
+/* Theme Colors */
+.light-theme {
+    --color-bg: #f5f5f5;
+    --color-control-bg: #ffffff;
+    --color-control-accent-bg: #dcdcdc;
+    --color-control-focus-bg: #ffffff;
+    --color-text: #191a2c;
+    --color-badge: #191a2c;
+    --color-badge-text: #f5f5f5;
+}
+
+.dark-theme {
+    --color-bg: #191a2c;
+    --color-control-bg: #303041;
+    --color-control-accent-bg: #474756;
+    --color-control-focus-bg: #5E5E6B;
+    --color-text: #f5f5f5;
+    --color-badge: #f5f5f5;
+    --color-badge-text: #303041;
+}
+
+/* Global Application */
+* {
+    transition: 0.25s all linear;
+    font-family: var(--font-default);
     user-select: none;
 }
 
@@ -8,130 +56,46 @@ html,
 body {
     margin: 0;
     height: 100%;
-    background: transparent;
+    background-color: var(--color-bg);
+    color: var(--color-text);
 }
 
-.main-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow-y: auto;
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 
-.sidenav {
-    background-color: #fffc;
-    
-    transition: 0.5s;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+/* Bootstrap Overrides */
+.display-1,
+.display-2,
+.display-3,
+.display-4 {
+    font-family: var(--font-heading);
 }
 
-    .sidenav a {
-        padding: 10px 3px;
-        text-decoration: none;
-        font-size: 15px;
-        display: block;
-        transition: 0.3s;
-    }
-
-        .sidenav a:not(:last-child) {
-            border-bottom: 1px solid #3335;
-        }
-
-        .sidenav a:hover {
-            color: #37c !important;
-        }
-
-    .sidenav .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
-    }
-
-#main {
-    margin-left: 300px;
-    transition: margin-left .5s;
-    padding: 10px;
-}
-.modal {
-    background-color: #0005 !important;
+.lead {
+    font-family: var(--font-description);
 }
 
-@media screen and (max-width: 768px) {
-    .sidenav {
-        width: 0 !important;
-    }
-
-    #main {
-        margin-left: 0;
-    }
-
-    .sidenav.active {
-        width: 100% !important;
-    }
-
-    .sidenav a {
-        font-size: 18px;
-    }
+.badge {
+    background-color: var(--color-badge);
+    color: var(--color-badge-text);
 }
 
-
-/* Color Scheme */
-.txt-default {
-    color: #e2e2e2;
+.input-group-text {
+    background-color: var(--color-control-accent-bg);
+    color: var(--color-text);
+    border-color: var(--color-control-accent-bg);
 }
 
-.txt-failure {
-    color: #ef476f;
+.form-control, .form-select {
+    background-color: var(--color-control-bg);
+    color: var(--color-text);
+    border-color: var(--color-control-accent-bg);
 }
 
-.txt-success {
-    color: #06d6a0;
-}
-
-.txt-warning {
-    color: #ffd166;
-}
-
-.txt-information {
-    color: #7678ed;
-}
-
-.bg-success {
-    background-color: #06d6a0;
-}
-
-.bg-warning {
-    background-color: #ffd166;
-}
-
-.bg-failure {
-    background-color: #ef476f;
-}
-
-.bg-information {
-    background-color: #7678ed;
-}
-.bg-default {
-    background-color: #000c;
-}
-
-
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 5px;
-}
-::-webkit-scrollbar-track {
-    background: #0005;
-    border-radius: 5px;
-}
-::-webkit-scrollbar-thumb {
-    background: #000a;
-    border-radius: 5px;
-}
-    ::-webkit-scrollbar-thumb:hover {
-        background: #000c;
+    .form-control:focus {
+        background-color: var(--color-control-focus-bg);
+        color: var(--color-text);
     }

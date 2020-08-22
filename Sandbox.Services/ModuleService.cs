@@ -24,7 +24,7 @@ namespace Sandbox.Services {
         }
 
         #endregion
-    
+
         #region Fields
 
         private List<SandboxModule> modules = new List<SandboxModule>();
@@ -45,11 +45,11 @@ namespace Sandbox.Services {
 
         #region Public Methods
 
-        public bool Exists(string key) => modules.Exists(e => string.Equals(e.ExecutionKey, key, StringComparison.InvariantCultureIgnoreCase));
-        public bool TryExecute(string key, params ModuleParameter[] parameters) {
-            if (Exists(key)) {
+        public bool Exists(Guid id) => modules.Exists(e => e.ID == id);
+        public bool TryExecute(Guid id, params ModuleParameter[] parameters) {
+            if (Exists(id)) {
                 try {
-                    SandboxModule module = modules.Single(s => string.Equals(s.ExecutionKey, key, StringComparison.InvariantCultureIgnoreCase));
+                    SandboxModule module = modules.Single(s => s.ID == id);
                     var instance = Convert.ChangeType(module, module.GetType());
                     PropertyInfo[] moduleParameters = module.GetType().GetProperties().Where(w => w.GetCustomAttribute<ModuleParameterAttribute>() != null).ToArray();
                     if (moduleParameters != null && moduleParameters.Length > 0) {
@@ -69,13 +69,11 @@ namespace Sandbox.Services {
                     module.Run();
                     return true;
                 } catch { return false; }
-            }
-
-            return false;
+            } return false;
         }
-        public ModuleParameter[] GetModuleParameters(string key) {
+        public ModuleParameter[] GetModuleParameters(Guid id) {
             List<ModuleParameter> result = new List<ModuleParameter>();
-            SandboxModule module = modules.Single(s => string.Equals(s.ExecutionKey, key, StringComparison.InvariantCultureIgnoreCase));
+            SandboxModule module = modules.Single(s => s.ID == id);
             var instance = Convert.ChangeType(module, module.GetType());
             PropertyInfo[] parameters = module.GetType().GetProperties().Where(w => w.GetCustomAttribute<ModuleParameterAttribute>() != null).ToArray();
             if (parameters != null && parameters?.Length > 0) {
@@ -87,6 +85,8 @@ namespace Sandbox.Services {
                         DisplayElement = description.DisplayElement,
                         RequestMessage = description.RequestMessage,
                         Required = description.Required,
+                        MinValue = description.MinValue,
+                        MaxValue = description.MaxValue,
                         Value = parameter.GetValue(instance)
                     });
                 }

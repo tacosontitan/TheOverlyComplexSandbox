@@ -2,6 +2,7 @@
 
 namespace Sandbox.Modules.CSharp.General.Parameters {
     [SandboxModule("Display Elements", "cs-display-elements", @"Parameters can utilize the DisplayElement property to adjust how the web and windows forms applications will display them.\n\nAs more element types are supported, this module will be updated to test them. All responses given are simply echoed back to ensure the supplied value was received.")]
+    [ModuleTags("general", "sandbox", "testing")]
     public class DisplayElementModule : SandboxModule {
 
         #region Parameters
@@ -10,10 +11,12 @@ namespace Sandbox.Modules.CSharp.General.Parameters {
         public bool IsUsersBirthday { get; set; }
         [ModuleParameter("First Name", "What's your first name?", DisplayElement.Textbox, Required = true)]
         public string FirstName { get; set; }
-        [ModuleParameter("Last Name", "What's your last name?", DisplayElement.RichTextbox, Required = true)]
+        [ModuleParameter("Last Name", "What's your last name?", DisplayElement.Textbox, Required = true)]
         public string LastName { get; set; }
-        [ModuleParameter("About Me", "Tell us about yourself:", DisplayElement.Textbox, Required = true)]
+        [ModuleParameter("About Me", "Tell us about yourself:", DisplayElement.RichTextbox, Required = true)]
         public string AboutMe { get; set; }
+        [ModuleParameter("Random Number", "Pick a random number between 1 and 100.", DisplayElement.Slider, Required = true, MinValue = 1, MaxValue = 100)]
+        public int RandomNumber { get; set; }
 
         #endregion
 

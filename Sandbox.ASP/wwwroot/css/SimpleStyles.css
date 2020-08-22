@@ -1,0 +1,59 @@
+﻿.underline {
+    border-bottom: 1px solid #aaa;
+}
+
+.csharp.badge {
+    background-color: var(--color-green);
+}
+
+.csharp.module {
+    border-left-color: var(--color-green);
+}
+
+.visualbasic.badge {
+    background-color: var(--color-purple);
+}
+
+.visualbasic.module {
+    border-left-color: var(--color-purple);
+}
+
+.fsharp.badge {
+    background-color: var(--color-pink);
+}
+
+.fsharp.module {
+    border-left-color: var(--color-pink);
+}
+
+.python.badge {
+    background-color: var(--color-yellow);
+}
+
+.python.module {
+    border-left-color: var(--color-yellow);
+}
+
+.cplusplus.badge {
+    background-color: var(--color-orange);
+}
+
+.cplusplus.module {
+    border-left-color: var(--color-orange);
+}
+
+.javascript.badge {
+    background-color: var(--color-blue);
+}
+
+.javascript.module {
+    border-left-color: var(--color-blue);
+}
+
+.generallanguage.badge {
+    background-color: var(--color-aqua);
+}
+
+.generallanguage.module {
+    border-left-color: var(--color-aqua);
+}

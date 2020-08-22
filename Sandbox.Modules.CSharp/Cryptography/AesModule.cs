@@ -5,14 +5,15 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace Sandbox.Modules.CSharp.Cryptography {
-    [SandboxModule("AES Cryptography", "cs-aes", "Tests encrypting and decrypting data using the Aes algorithm.")]
+    [SandboxModule("AES Cryptography", "cs-aes", "I had never attempted to write anything related to cryptography before this module. I was challenged by a co-worker to come up with a way to secure a web token that was efficient and not easy to crack. What better way to do that than to allow the use of plain text as a key, offer an offset for the data, and finally encrypt with the hashed key and specified offset. This way, in order to decrypt, you have to know the plain text key, the offset, the type of algorithm used, and the settings used for it. It was more complex than I initially thought, but in the end, my determination triumphed.")]
+    [ModuleTags("cryptography", "aes", "encrypt", "decrypt")]
     public class AesModule : SandboxModule {
 
         #region Parameters
 
         [ModuleParameter("Encryption Key", "What would you like your encryption key to be?", DisplayElement.Textbox, Required = true)]
         public string EncryptionKey { get; set; }
-        [ModuleParameter("Encryption Offset", "How many bytes should the encrypted data be shifted by?", DisplayElement.Textbox, Required = true)]
+        [ModuleParameter("Encryption Offset", "How many bytes should the encrypted data be shifted by?", DisplayElement.Slider, Required = true, MinValue = 0, MaxValue = 128)]
         public byte EncryptionOffset { get; set; }
         [ModuleParameter("Data To Encrypt", "What data should be encrypted?", DisplayElement.RichTextbox, Required = true)]
         public string DataToEncrypt { get; set; }

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="DemoModule.fs" />
+    <Compile Include="General\DemoModule.fs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,203 +4,251 @@
     ViewData["Title"] = "Home page";
 }
 
-<div id="sideNav" class="sidenav">
-    <ul class="module-list">
-        <li>
-            <p class="lead text-center">Modules</p>
-        </li>
-        @foreach (string category in Model.ModuleCategories) {
-            <li>
-                <p class="lead accordion txt-default">@category</p>
-                <ul class="sub-modules">
-                    @foreach (Sandbox.Core.SandboxModule module in Model.DiscoveredModules.Where(w => w.Category == category)) {
-                        <li class="txt-default" data-toggle="modal" data-target="#moduleModal" onclick="populateModal('@module.ExecutionKey', '@module.Name', '@module.Description.Replace("'", "\\'")');">
-                            @module.Name
-                        </li>
-                    }
-                </ul>
-            </li>
-        }
-    </ul>
-</div>
-
-<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-<div id="main" class="main-container txt-default">
-    <div class="text-center">
-        <img style="width: 50%; margin-top: 15px;" src="https://assets.codepen.io/2940219/Sandbox+Front_1.png" />
-        <h1 class="display-4">Welcome!</h1>
-        <p class="lead">The sandbox is a be a place for learning new concepts, solving new problems, creating new ideas, and testing new theories. To get started, simply choose a module and follow the prompts that follow.<br /><br />Thanks for stopping by!</p>
-        <span class="btn btn-light d-sm-none" onclick="openNav()">Open Module List</span>
-        <ul id="eventList" class="event-list"></ul>
-    </div>
-</div>
-
-@* Module Modal *@
-<div class="modal fade txt-default" id="moduleModal" tabindex="-1" role="dialog" aria-labelledby="moduleModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="moduleModalTitle">Sorry about this!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="lead" id="moduleModalDescription">If you're reading this, then something went wrong while trying to load the selected module. The most likely issue is that the module wasn't properly defined. Common issues are apostrophes in the module name or description.</p>
-                <div id="modalParameterContainer"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" id="moduleModalExecuteButton" data-moduleKey="" onclick="executeModule(); return false;">Execute</button>
-            </div>
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary shadow">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-box-open"></i>
+            Sandbox
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="nav nav-pill navbar-nav" id="myNav" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="modules-tab" data-toggle="tab" href="#modules" role="tab" aria-controls="modules" aria-selected="false">Modules</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="event-log-tab" data-toggle="tab" href="#event-log" role="tab" aria-controls="event-log" aria-selected="false">Event Log</a>
+                </li>
+                <li class="nav-item d-none">
+                    <a class="nav-link" id="module-details-tab" data-toggle="tab" href="#module-details" role="tab" aria-controls="module-details" aria-selected="false">Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="feedback-tab" data-toggle="tab" href="#feedback" role="tab" aria-controls="feedback" aria-selected="false">Feedback</a>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
+<div class="main-body container-fluid pt-4">
+    <div class="tab-content" id="nav-tabContent">
+
+        @* About *@
+        <div class="tab-pane active" id="about" role="tabpanel" aria-labelledby="about-tab">
+            <div class="row">
+                <div class="col-12 col-md-8 mt-5 pt-5 mt-sm-3 pt-sm-3 mt-md-0 pt-md-0">
+                    <h1 class="display-3 mt-5 pt-5 mt-sm-3 pt-sm-3 mt-md-0 pt-md-0">Accelerate your learning with the sandbox!</h1>
+                </div>
+                <div class="col-12">
+                    <p class="lead">Traditionally, a sandbox is a place to make new things, dig tunnels, play, and just have endless fun. It's a place to test our bravery and knowledge, and press the boundaries of our imaginations as often as possible. The digital sandbox builds on that same foundation to spark creativity, fuel abstract thinking, and simplify accelerated prototyping. It's a place to test new ideas and learn new concepts. It's a safe space to express yourself with no judgement. It's a place to innovate and shape the future of the computer science industry. So get out there, challenge yourself, and showcase it to the world!</p>
+                </div>
+            </div>
+            <div class="row">
+                <p class="lead mb-0 mt-4"><b>A variety of languages, a world of possibilities.</b></p>
+                <span>The sandbox supports a colorful palette of languages, compiled, interpreted, web focused, data focused, you name it, it's here. Challenging yourself and growing professionally requires getting outside of your comfort zone from time to time, and learning something new. That's why the sandbox supports so many different languages. Can you dig it?</span>
+                <div class="grid text-light">
+                    <div class="card grid-large csharp badge">
+                        <p class="display-1">C#</p>
+                    </div>
+                    <div class="grid p-0 text-light">
+                        <div class="card fsharp badge">
+                            <p class="display-1">F#</p>
+                        </div>
+                        <div class="card visualbasic badge">
+                            <p class="display-4">VB</p>
+                        </div>
+                        <div class="card javascript badge">
+                            <p class="display-4">JS</p>
+                        </div>
+                        <div class="card cplusplus badge">
+                            <p class="display-4">C++</p>
+                        </div>
+                    </div>
+                    <div class="card python badge">
+                        <p class="display-4">Python</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <p class="lead mb-0 mt-4"><b>A modular solution to an age old question.</b></p>
+                <span>
+                    How do you demonstrate a working knowledge in your field to potential clients, organizations, or educators? Well, how about creating a living portfolio built out of your triumphs over new challenges? The sandbox takes that idea, and hits the ground sprinting. It enables rapid prototyping using a modular approach, in which, each module defines it's own parameters, validation, and execution. The sandbox discovers modules using reflection for .NET based modules, and syntax parsing for others.
+                    <br /><br />
+                    But wait, there's more! Acting now would force you to choose from every module created. What if, instead, the sandbox also provided the most popular modules right here.
+                </span>
+                <div class="row mt-3 mb-3">
+                    <div class="col-3">
+                        <div class="nav flex-column nav-pills popular-module-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Cryptography</a>
+                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Artificial Intelligence</a>
+                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">AI + Machine Learning</a>
+                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Mathematics</a>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="tab-content" id="v-pills-tabContent">
+                            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...</div>
+                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
+                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+                            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-right">- Oh yeah, it does that too.</p>
+            </div>
+
+            <p class="lead">
+                The sandbox also utilizes continuous deployment to Azure to ensure that it stays up-to-date with the repository here. This way, if I add a new module, it's available to the public, not only in source control, but as a working module the community can tinker with, study the code for, and learn from.
+            </p>
+        </div>
+
+        @* Modules *@
+        <div class="tab-pane" id="modules" role="tabpanel" aria-labelledby="modules-tab">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="display-4">Modules</h1>
+                    <p class="lead">Sandbox modules can be written in several different languages. The majority of them are written in <code>C#</code>, followed closely by <code>Python</code>, <code>JavaScript</code>, and <code>F#</code>. To get you started, the sandbox automatically loads a list of the most popular modules. You can browse the entire catelog by selecting a language and a category.</p>
+                </div>
+            </div>
+            <div class="row underline">
+                <div class="col-12 col-sm-6">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Language</span>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>All</option>
+                            <option value="1">C#</option>
+                            <option value="2">F#</option>
+                            <option value="3">Visual Basic</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Category</span>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>All</option>
+                            <option value="1">General</option>
+                            <option value="2">Cryptography</option>
+                            <option value="3">API Integration</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-3 pr-3">
+                @foreach (var module in Model.DiscoveredModules) {
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 module-container">
+                        <div class="module @module.FriendlyLanguage pl-1 pr-1" onclick="showModuleDetails(this, '@module.ID');">
+                            <p class="lead mb-0">@module.Name</p>
+                            <small>@module.ShortDescription</small>
+                            <div class="badge-collection">
+                                <span class="badge @module.FriendlyLanguage">@module.Language</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @* Statistics and Events *@
+        <div class="tab-pane" id="event-log" role="tabpanel" aria-labelledby="event-log-tab">This is the event log tab.</div>
+
+        @* Module Details *@
+        <div class="tab-pane" id="module-details" role="tabpanel" aria-labelledby="module-details-tab">
+
+            @* Module Description *@
+            <div class="row underline">
+                <div class="col-12 col-sm-9">
+                    <h1 class="display-4"><span id="moduleName"></span> <span id="moduleLanguage" class="badge csharp"></span></h1>
+                    <p id="moduleTags" class="lead mb-1"></p>
+                    <p id="moduleDescription" class="lead mb-1"></p>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <button type="submit" class="btn btn-primary col-12 mb-1" onclick="executeModule();" data-moduleid="">Execute</button>
+                </div>
+            </div>
+
+            @* Parameters *@
+            <div class="row pt-3">
+                <div class="col-12 col-md-4">
+                    <h1 class="display-4">Parameters</h1>
+                    <form id="moduleParameters"></form>
+                </div>
+            </div>
+        </div>
+
+        @* Settings *@
+        <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            <h1 class="display-4">Settings</h1>
+            <p class="lead">You know, some cool configuration stuff lives here. If you change stuff, stuff might happen!</p>
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Display Name</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">This is how you appear to others in the event log and in feedback.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="darkModeToggle" class="form-label">Current Theme</label>
+                    <div id="darkModeToggle" class="toggle" aria-describedby="darkModeToggleHelp">
+                        <input type="checkbox" id="theHolyToggle" onchange="toggleDarkMode(this);" checked />
+                        <label class="d-inline-block" for="theHolyToggle"></label>
+                    </div>
+                    <div id="darkModeToggleHelp" class="form-text">I wonder what this does?</div>
+                </div>
+            </form>
+        </div>
+
+        @* Feedback *@
+        <div class="tab-pane" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+            <div class="row underline pb-3">
+                <h1 class="display-4">Feedback</h1>
+                <p class="lead">Did you enjoy playing in the sandbox today? What module did you like the most? Is there anything you would've done differently? Share your thoughts because, well, reading is fun!</p>
+                <form>
+                    <div class="mb-3">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                </form>
+            </div>
+            <p class="lead mt-3">In case you're curious, those before you have left their mark on the sandbox. Here's what they had to say!</p>
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="col-12 feedback-container">
+                        <div class="feedback">
+                            <small class="underline">Captain Anonymous</small>
+                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget ex convallis, vehicula mauris in, maximus purus. Nam ipsum erat, tempor eget maximus ac, iaculis eu lorem.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="col-12 feedback-container">
+                        <div class="feedback">
+                            <small class="underline">Captain Anonymous</small>
+                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget ex convallis, vehicula mauris in, maximus purus. Nam ipsum erat, tempor eget maximus ac, iaculis eu lorem.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="col-12 feedback-container">
+                        <div class="feedback">
+                            <small class="underline">Captain Anonymous</small>
+                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget ex convallis, vehicula mauris in, maximus purus. Nam ipsum erat, tempor eget maximus ac, iaculis eu lorem.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
-
-<style>
-    body {
-        background-image: url(https://assets.codepen.io/2940219/Mountains.jpg);
-        background-size: cover;
-        background-position: center;
-    }
-
-    .display-1,
-    .display-2,
-    .display-3,
-    .display-4 {
-        font-family: "Quicksand", cursive;
-    }
-
-    .lead {
-        font-family: "Open Sans Condensed", sans-serif;
-    }
-
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-
-    .module-list {
-        height: calc(100% - 20px);
-        position: fixed;
-        z-index: 1;
-        top: 10px;
-        left: 10px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        width: 30%;
-        min-width: 300px;
-        max-width: 400px;
-    }
-
-        .module-list > li {
-            margin: 10px;
-        }
-
-            .module-list > li > .accordion {
-                padding: 15px;
-                margin: 0;
-                background-color: #000d;
-                border-radius: 5px;
-                transition: all 0.25s linear;
-                cursor: pointer;
-            }
-
-                .module-list > li > .accordion:hover {
-                    background-color: #000e;
-                }
-
-            .module-list > li > p.active {
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-            }
-
-        .module-list .sub-modules {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-            background-color: #000a;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
-
-            .module-list .sub-modules > li {
-                padding: 15px 30px;
-                transition: 0.25s all linear;
-                cursor: pointer;
-            }
-
-                .module-list .sub-modules > li:not(:last-child) {
-                    border-bottom: 1px solid #3335;
-                }
-
-                .module-list .sub-modules > li:hover {
-                    background-color: #000c;
-                }
-
-    .accordion:after {
-        content: "\02795"; /* Unicode character for "plus" sign (+) */
-        font-size: 10px;
-        float: right;
-        margin-left: 5px;
-    }
-
-    .active:after {
-        content: "\2796"; /* Unicode character for "minus" sign (-) */
-    }
-
-    .event-list {
-        max-height: 500px;
-        overflow-y: auto;
-    }
-
-        .event-list > .event {
-            background-color: #000c;
-            border-radius: 5px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            margin-bottom: 10px;
-        }
-
-            .event-list > .event > p {
-                margin: 0;
-                font-size: 20px;
-                padding: 0 10px;
-            }
-
-            .event-list > .event > *:first-child {
-                padding-top: 10px;
-            }
-
-            .event-list > .event > *:last-child {
-                padding-bottom: 10px;
-            }
-
-            .event-list > .event > p > span {
-                float: right;
-                font-size: 15px;
-                line-height: 20px;
-            }
-
-            .event-list > .event > .msg {
-                font-size: 18px;
-            }
-
-    .modal-content {
-        background-color: #000c !important;
-    }
-</style>
 <script>
-    const DisplayElement = Object.freeze({ Checkbox: 0, Textbox: 1, RichTextbox: 2 });
-    const SandboxEventType = Object.freeze({ None: 0, Information: 1, Warning: 2, Failure: 3, Success: 4 });
-    var sideNav = document.getElementById("sideNav");
-    function openNav() {
-        sideNav.classList.add('active');
-    }
-    function closeNav() {
-        sideNav.classList.remove('active');
-    }
-
     var moduleParameters = undefined;
     function executeModule() {
         var executionKey = document.getElementById("moduleModalExecuteButton").dataset.moduleKey;
@@ -227,132 +275,106 @@
             success: function (result) { }
         });
     }
-
-    // Modal functionality.
-    var modalParameterContainer = document.getElementById("modalParameterContainer");
-    function closeModal() {
-        $('#modalParameterContainer').modal('toggle');
-    }
-    function populateModal(executionKey, moduleName, moduleDescription) {
-        clearModal();
-        document.getElementById("moduleModalExecuteButton").dataset.moduleKey = executionKey;
-        document.getElementById("moduleModalTitle").innerText = moduleName;
-        document.getElementById("moduleModalDescription").innerText = moduleDescription;
-        $.ajax({
-            type: "POST",
-            url: "/Modules/GetParameters?key=" + executionKey,
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({ key: executionKey.toString() }),
-            dataType: 'json',
-            error: function (XMLHttpRequest, textStatus, errorThrown) { /* TODO: Add error handling. */ },
-            success: function (result) {
-                moduleParameters = result;
-                for (var i = 0; i < result.length; i++)
-                    addParameterToModal(result[i]);
-            }
-        });
-    }
-    function addParameterToModal(parameter) {
-        var formGroup = document.createElement("DIV");
-        if (parameter.displayElement == DisplayElement.Checkbox)
-            formGroup.classList.add('form-check');
-        else
-            formGroup.classList.add('form-group');
-
-        var input = document.createElement("INPUT");
-        switch (parameter.displayElement) {
-            case DisplayElement.Checkbox: input.setAttribute("type", "checkbox"); break;
-            case DisplayElement.Textbox: input.setAttribute("type", "text"); break;
-            case DisplayElement.RichTextbox: input = document.createElement("TEXTAREA"); break;
-        }
-        input.setAttribute("id", "input" + parameter.name);
-        if (parameter.displayElement == DisplayElement.Checkbox) {
-            input.classList.add('form-check-input');
-        } else {
-            input.classList.add('form-control');
-        }
-
-        var label = document.createElement("LABEL");
-        label.setAttribute("for", "input" + parameter.name);
-        label.innerText = parameter.requestMessage;
-
-        if (parameter.displayElement == DisplayElement.Checkbox) {
-            formGroup.appendChild(input);
-            formGroup.appendChild(label);
-        } else {
-            formGroup.appendChild(label);
-            formGroup.appendChild(input);
-        }
-
-        modalParameterContainer.appendChild(formGroup);
-    }
-    function clearModal() {
-        modalParameterContainer.innerHTML = "";
-    }
-
     // Fetch Events
     var eventList = document.getElementById("eventList");
     var fetchingEvents = false;
     setInterval(function () {
-        if (!fetchingEvents) {
-            $.ajax({
-                type: "POST",
-                url: "/Queue/GetMessages",
-                contentType: 'application/json',
-                error: function (XMLHttpRequest, textStatus, errorThrown) { fetchingEvents = false; /* TODO: Add error handling. */ },
-                success: function (result) {
-                    for (var i = 0; i < result.length; i++) {
-                        var event = result[i];
-                        var eventItem = document.createElement("LI");
-                        eventItem.className = 'event text-left txt-default';
+        //if (!fetchingEvents) {
+        //    callWebServicePost("/Queue/GetMessages", null, function (result) {
+        //        for (var i = 0; i < result.length; i++) {
+        //            var event = result[i];
+        //            var eventItem = document.createElement("LI");
+        //            eventItem.className = 'event text-left txt-default';
 
-                        var title = document.createElement("P");
-                        if (event.owningModule != null && event.owningModule.length > 0)
-                            title.innerText = event.owningModule;
-                        else
-                            title.innerText = 'Unknown Module';
+        //            var title = document.createElement("P");
+        //            if (event.owningModule != null && event.owningModule.length > 0)
+        //                title.innerText = event.owningModule;
+        //            else
+        //                title.innerText = 'Unknown Module';
 
-                        title.classList.add('lead');
-                        switch (event.eventType) {
-                            case SandboxEventType.Information: title.classList.add('txt-information'); break;
-                            case SandboxEventType.Success: title.classList.add('txt-success'); break;
-                            case SandboxEventType.Warning: title.classList.add('txt-warning'); break;
-                            case SandboxEventType.Failure: title.classList.add('txt-failure'); break;
-                            default: title.classList.add('txt-default'); break;
-                        }
+        //            title.classList.add('lead');
+        //            switch (event.eventType) {
+        //                case SandboxEventType.Information: title.classList.add('txt-information'); break;
+        //                case SandboxEventType.Success: title.classList.add('txt-success'); break;
+        //                case SandboxEventType.Warning: title.classList.add('txt-warning'); break;
+        //                case SandboxEventType.Failure: title.classList.add('txt-failure'); break;
+        //                default: title.classList.add('txt-default'); break;
+        //            }
 
-                        var message = document.createElement("P");
-                        message.innerText = event.message;
-                        message.className = 'lead msg';
+        //            var message = document.createElement("P");
+        //            message.innerText = event.message;
+        //            message.className = 'lead msg';
 
-                        eventItem.appendChild(title);
-                        eventItem.appendChild(message);
-                        eventList.insertBefore(eventItem, eventList.childNodes[0]);
-                    }
+        //            eventItem.appendChild(title);
+        //            eventItem.appendChild(message);
+        //            eventList.insertBefore(eventItem, eventList.childNodes[0]);
+        //        }
 
-                    fetchingEvents = false;
-                }
-            });
-        }
-
-        //<li class="event text-left txt-default">
-        //    <p class="lead txt-information">Module Name <span class="txt-default">8/16/20 10:02:32AM</span></p>
-        //    <p class="lead msg">Event message.</p>
-        //</li>
+        //        fetchingEvents = false;
+        //    }, function (result) {
+        //        fetchingEvents = false;
+        //    });
+        //}
     }, 1000);
 
-    // Enable expand and collapse of the category accordions.
-    var acc = document.getElementsByClassName("accordion");
-    var i;
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.maxHeight) {
-                panel.style.maxHeight = null;
-            } else {
-                panel.style.maxHeight = panel.scrollHeight + "px";
+
+    var modulesTab = document.getElementById("modules-tab");
+    var modulesTabContent = document.getElementById("modules");
+
+    var detailsTab = document.getElementById("module-details-tab");
+    var detailsTabContent = document.getElementById("module-details");
+
+    var eventLogTab = document.getElementById("event-log-tab");
+    var eventLogTabContent = document.getElementById("event-log")
+
+    // Fetch all details for the module, populate the details tab, and change tabs.
+    var moduleName = document.getElementById("moduleName");
+    var moduleLanguage = document.getElementById("moduleLanguage");
+    var moduleDescription = document.getElementById("moduleDescription");
+    var moduleTags = document.getElementById("moduleTags");
+    function showModuleDetails(sender, id) {
+        modulesTab.classList.remove("active");
+        modulesTabContent.classList.remove("active");
+
+        getModule(id, function (result) {
+            moduleName.innerText = result.name;
+            moduleLanguage.innerText = result.language;
+            moduleLanguage.className = "badge " + result.friendlyLanguage;
+            moduleDescription.innerText = result.description;
+            moduleTags.innerHTML = "";
+            for (let i = 0; i < result.tags.length; i++) {
+                if (result.tags[i].length > 0) {
+                    var tag = document.createElement("SPAN");
+                    tag.className = "badge d-inline-block mr-1";
+                    tag.innerText = result.tags[i];
+                    moduleTags.appendChild(tag);
+                }
             }
+
+            getModuleParameters(id, function (result) {
+                document.getElementById("moduleParameters").innerHTML = result.length < 1 ? "There are no parameters for this module." : "";
+                for (let i = 0; i < result.length; i++)
+                    addParameterToDetailsTab(result[i]);
+            }, function (result) {
+
+            });
+        }, function (result) {
+            sender.classList.add("failed-to-execute");
         });
+
+        detailsTab.classList.add("active");
+        detailsTabContent.classList.add("active");
+    }
+    function addParameterToDetailsTab(parameter) {
+        document.getElementById("moduleParameters").appendChild(createDisplayElementForParameter(parameter));
+    }
+
+
+    function showEventLog() {
+        detailsTab.classList.remove("active");
+        detailsTabContent.classList.remove("active");
+
+        eventLogTab.classList.add("active");
+        eventLogTabContent.classList.add("active");
     }
 </script>

@@ -1,0 +1,16 @@
+﻿.popular-module-nav .nav-link {
+    color: var(--color-text);
+    border-left: 5px solid transparent;
+}
+
+    .popular-module-nav .nav-link:not(.active):hover {
+        color: var(--color-green);
+    }
+
+    .popular-module-nav .nav-link.active {
+        background-color: transparent;
+        border-color: var(--color-green);
+        color: var(--color-green);
+        border-radius: 0;
+        font-weight: bold;
+    }

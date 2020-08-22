@@ -1,0 +1,24 @@
+﻿.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 15px;
+}
+
+    .grid > .grid-large {
+        grid-row: 1/span 2;
+    }
+
+    .grid > .card {
+        margin: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100px;
+        background-color: var(--color-gray);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+    }
+
+        .grid > .card > p {
+            margin-bottom: 0;
+        }

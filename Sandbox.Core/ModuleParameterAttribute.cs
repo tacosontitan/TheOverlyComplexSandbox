@@ -27,6 +27,14 @@ namespace Sandbox.Core {
         /// The type of element used to display this parameter in Windows Forms and Web.
         /// </summary>
         public DisplayElement DisplayElement { get; set; }
+        /// <summary>
+        /// The minimum acceptable value for this parameter. Only used if DisplayElement is set to Slider.
+        /// </summary>
+        public int MinValue { get; set; }
+        /// <summary>
+        /// The maximum acceptable value for this parameter. Only used if DisplayElement is set to Slider.
+        /// </summary>
+        public int MaxValue { get; set; }
 
         #endregion
 

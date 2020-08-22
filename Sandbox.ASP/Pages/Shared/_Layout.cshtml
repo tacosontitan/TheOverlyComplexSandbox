@@ -4,20 +4,46 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Sandbox</title>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@900&family=News+Cycle&family=Open+Sans+Condensed:wght@300&family=Quicksand&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/css/site.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    @* Font Awesome v5.8.1 *@
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+    @* Bootstrap 5 (Alpha 1) *@
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+
+    @* Local Styles *@
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/TacoLoader.css" rel="stylesheet" />
+    <link href="~/css/TacoToggle.css" rel="stylesheet" />
+    <link href="~/css/GridWithLargeCardSupport.css" rel="stylesheet" />
+    <link href="~/css/PopularModules.css" rel="stylesheet" />
+    <link href="~/css/Module.css" rel="stylesheet" />
+    <link href="~/css/EventList.css" rel="stylesheet" />
+    <link href="~/css/Feedback.css" rel="stylesheet" />
+    <link href="~/css/SimpleStyles.css" rel="stylesheet" />
+
+    @* Local Scripts *@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/WebServiceUtilities.js"></script>
+    <script src="~/js/ModuleUtilities.js"></script>
+    <script src="~/js/ParameterUtilities.js"></script>
+    <script src="~/js/ThemeChanger.js"></script>
 </head>
 <body>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <!-- Loader -->
+    <div id="loadingContainer" class="loader-container">
+        <h1 id="loadingIcon" class="display-1 icon">🧘‍♀</h1>
+        <p id="loadingMessage" class="lead"></p>
     </div>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/TacoLoader.js"></script>
+    <script>changeTheme(SiteTheme.Dark);</script>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

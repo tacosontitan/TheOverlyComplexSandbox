@@ -1,0 +1,32 @@
+﻿.toggle > input[type="checkbox"] {
+    display: none;
+}
+
+.toggle > label {
+    cursor: pointer;
+    position: relative;
+    width: 100px;
+    height: 35px;
+    background-color: var(--color-control-bg);
+    border-radius: 30px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5) inset;
+}
+
+    .toggle > label::after {
+        content: '🌯';
+        font-size: 25px;
+        line-height: 35px;
+        position: absolute;
+        top: -2px;
+        left: 5px;
+        transition: 0.25s left linear;
+    }
+
+.toggle > input[type="checkbox"]:checked + label {
+    background-color: var(--color-success);
+}
+
+    .toggle > input[type="checkbox"]:checked + label::after {
+        content: '🌮';
+        left: 62px;
+    }

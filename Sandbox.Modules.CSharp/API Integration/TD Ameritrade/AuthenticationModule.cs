@@ -2,6 +2,7 @@
 
 namespace Sandbox.Modules.CSharp.API_Integration.TD_Ameritrade {
     [SandboxModule("TD Ameritrade Authentication", "cs-td-auth", "Integrates with the TD Ameritrade API.")]
+    [ModuleTags("finance", "oauth", "web-services", "api", "refresh")]
     public class AuthenticationModule : SandboxModule {
 
         #region Parameters

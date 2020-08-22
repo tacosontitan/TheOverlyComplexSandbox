@@ -1,0 +1,14 @@
+﻿.feedback-container {
+    padding: 10px;
+}
+
+.feedback {
+    background-color: var(--color-control-bg);
+    color: var(--color-text);
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+    .feedback > small {
+        display: block;
+    }

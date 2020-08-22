@@ -6,27 +6,61 @@ namespace Sandbox.Core {
 
         #region Properties
 
+        public Guid ID { get; private set; }
         public string Name { get; private set; }
+        public string Language { get; private set; }
+        public string FriendlyLanguage { get; private set; }
         public string Category { get; private set; }
+        public string[] Tags { get; private set; }
         public string ExecutionKey { get; private set; }
         public string Description { get; private set; }
+        public string ShortDescription {
+            get {
+                string description = Description.Substring(0, Math.Min(Description.Length, 100));
+                if (Description.Length > 100)
+                    description += "...";
+
+                return description;
+            }
+        }
 
         #endregion
 
         #region Constructors
 
         public SandboxModule() {
-            Category = GetType().Namespace.Replace("Sandbox.Modules.", string.Empty)
-                                          .Replace('.', '/')
-                                          .Replace('_', ' ')
-                                          .Replace("CSharp", "C#")
-                                          .Replace("FSharp", "F#")
-                                          .Replace("CPlusPlus", "C++");
+            // Get module description. If no description is present, module is invalid.
             SandboxModuleAttribute moduleDescription = GetType().GetCustomAttribute<SandboxModuleAttribute>();
-            if (moduleDescription != null) {
+            if (moduleDescription == null)
+                throw new InvalidOperationException("All sandbox modules are required to have a description through the SandboxModuleAttribute object.");
+            else {
                 Name = moduleDescription.Name;
                 ExecutionKey = moduleDescription.ExecutionKey;
                 Description = moduleDescription.Description;
+            }
+
+            // Create this session's ID for this module.
+            ID = Guid.NewGuid();
+
+            // Check for module tags.
+            ModuleTagsAttribute tags = GetType().GetCustomAttribute<ModuleTagsAttribute>();
+            if (tags != null)
+                Tags = tags.Values;
+
+            // TODO: Implement a cleaner method to accomplish this.
+            // There are better ways, this is just easy for the sake of implementation time.
+            // However, it's prone to easy bugs.
+            string nspace = GetType().Namespace.Replace("Sandbox.Modules.", string.Empty);
+            string[] nspaceBreakdown = nspace.Split('.');
+            Category = nspaceBreakdown[1];
+            FriendlyLanguage = nspaceBreakdown[0].ToLowerInvariant();
+            switch (FriendlyLanguage) {
+                case "csharp": Language = "C#"; break;
+                case "fsharp": Language = "F#"; break;
+                case "visualbasic": Language = "VB"; break;
+                case "python": Language = "PY"; break;
+                case "cplusplus": Language = "C++"; break;
+                case "javascript": Language = "JS"; break;
             }
         }
 

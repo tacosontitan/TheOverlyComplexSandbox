@@ -44,6 +44,7 @@
     <Compile Include="DisplayElement.cs" />
     <Compile Include="ModuleParameter.cs" />
     <Compile Include="ModuleParameterAttribute.cs" />
+    <Compile Include="ModuleTagsAttribute.cs" />
     <Compile Include="SandboxEventArgs.cs" />
     <Compile Include="SandboxModuleAttribute.cs" />
     <Compile Include="SandboxEventType.cs" />

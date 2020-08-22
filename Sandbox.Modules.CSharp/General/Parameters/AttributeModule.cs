@@ -2,6 +2,7 @@
 
 namespace Sandbox.Modules.CSharp.General.Parameters {
     [SandboxModule("Attributes", "cs-attributes", "Tests the module parameter attribute object.")]
+    [ModuleTags("general", "sandbox", "testing")]
     public class AttributeModule : SandboxModule {
 
         #region Parameters
