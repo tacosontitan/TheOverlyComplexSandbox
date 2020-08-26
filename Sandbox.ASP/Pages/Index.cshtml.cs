@@ -18,6 +18,7 @@ namespace Sandbox.ASP.Pages {
 
         public string[] ModuleCategories { get; private set; }
         public SandboxModule[] DiscoveredModules => ModuleService.Instance.Modules;
+        public FeedbackMessage[] Feedback => FeedbackService.Instance.GetFeedback().ToArray();
 
         #endregion
 

@@ -42,73 +42,37 @@
 
         @* About *@
         <div class="tab-pane active" id="about" role="tabpanel" aria-labelledby="about-tab">
-            <p class="lead">The sandbox is currently under construction, so things here are changing frequently. The most recent change was a revamp of the entire user interface which gives a better user experience. However, this removed the functionality for executing modules. Also, support for feedback from the community is in the works so feel free to check out that tab while it's still being built!</p>
-            @*<div class="row">
-                    <div class="col-12 col-md-8 mt-5 pt-5 mt-sm-3 pt-sm-3 mt-md-0 pt-md-0">
-                        <h1 class="display-3 mt-5 pt-5 mt-sm-3 pt-sm-3 mt-md-0 pt-md-0">Accelerate your learning with the sandbox!</h1>
-                    </div>
-                    <div class="col-12">
-                        <p class="lead">Traditionally, a sandbox is a place to make new things, dig tunnels, play, and just have endless fun. It's a place to test our bravery and knowledge, and press the boundaries of our imaginations as often as possible. The digital sandbox builds on that same foundation to spark creativity, fuel abstract thinking, and simplify accelerated prototyping. It's a place to test new ideas and learn new concepts. It's a safe space to express yourself with no judgement. It's a place to innovate and shape the future of the computer science industry. So get out there, challenge yourself, and showcase it to the world!</p>
-                    </div>
+            <div class="row">
+                <div class="col-12 col-md-8 mt-5 pt-5 mt-sm-3 pt-sm-3 mt-md-0 pt-md-0">
+                    <h1 class="display-3 mt-5 pt-5 mt-sm-3 pt-sm-3 mt-md-0 pt-md-0">Welcome to the sandbox!</h1>
                 </div>
-                <div class="row">
-                    <p class="lead mb-0 mt-4"><b>A variety of languages, a world of possibilities.</b></p>
-                    <span>The sandbox supports a colorful palette of languages, compiled, interpreted, web focused, data focused, you name it, it's here. Challenging yourself and growing professionally requires getting outside of your comfort zone from time to time, and learning something new. That's why the sandbox supports so many different languages. Can you dig it?</span>
-                    <div class="grid text-light">
-                        <div class="card grid-large csharp badge">
-                            <p class="display-1">C#</p>
-                        </div>
-                        <div class="grid p-0 text-light">
-                            <div class="card fsharp badge">
-                                <p class="display-1">F#</p>
-                            </div>
-                            <div class="card visualbasic badge">
-                                <p class="display-4">VB</p>
-                            </div>
-                            <div class="card javascript badge">
-                                <p class="display-4">JS</p>
-                            </div>
-                            <div class="card cplusplus badge">
-                                <p class="display-4">C++</p>
-                            </div>
-                        </div>
-                        <div class="card python badge">
-                            <p class="display-4">Python</p>
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <p class="lead">
+                        Traditionally, a sandbox is a place to make new things, dig tunnels, play, and just have endless fun. It's a place to test our bravery and knowledge, and press the boundaries of our imaginations as often as possible. Likewise, the digital sandbox builds on that same foundation to spark creativity, fuel abstract thinking, and simplify accelerated prototyping. Here you'll find a modular solution to individual problems I've faced, new ideas I've wanted to test out, and concepts I've tackled head on. Now that you know what to expect, feel free to browse the currently available <a href="#modules" role="tab">modules</a>, and leave some <a href="#feedback" role="tab">feedback</a>.
+                        <br />
+                        <br />
+                        Things change here rapidly as there's always something to do to improve. The most recent change integrated the feedback tab with the database, updated the event log to use the new display styles, and refreshed the home page to display TODO items.
+                        <br />
+                        <br /><code>#TODOs</code>
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item">Add bundling and minification for <code>JavaScript</code> and <code>CSS</code>.</li>
+                        <li class="list-group-item">Add parameter validation.</li>
+                        <li class="list-group-item">Send events to database.</li>
+                        <li class="list-group-item">Load events from database.</li>
+                        <li class="list-group-item">Improve messaging system.</li>
+                        <li class="list-group-item">Add code preview for modules.</li>
+                        <li class="list-group-item">Add module execution statistics.</li>
+                        <li class="list-group-item">Add support for more than string responses (think images, HTML, etc).</li>
+                        <li class="list-group-item">Upgrade the error page.</li>
+                        <li class="list-group-item">Add support for <code>Python</code>.</li>
+                        <li class="list-group-item">Add support for <code>JavaScript</code>.</li>
+                        <li class="list-group-item">Add support for <code>C++</code>.</li>
+                        <li class="list-group-item">Add support for visual modules (think of CodePen).</li>
+                        <li class="list-group-item">Add support for web player Unity games.</li>
+                    </ul>
                 </div>
-
-                <div class="row">
-                    <p class="lead mb-0 mt-4"><b>A modular solution to an age old question.</b></p>
-                    <span>
-                        How do you demonstrate a working knowledge in your field to potential clients, organizations, or educators? Well, how about creating a living portfolio built out of your triumphs over new challenges? The sandbox takes that idea, and hits the ground sprinting. It enables rapid prototyping using a modular approach, in which, each module defines it's own parameters, validation, and execution. The sandbox discovers modules using reflection for .NET based modules, and syntax parsing for others.
-                        <br /><br />
-                        But wait, there's more! Acting now would force you to choose from every module created. What if, instead, the sandbox also provided the most popular modules right here.
-                    </span>
-                    <div class="row mt-3 mb-3">
-                        <div class="col-3">
-                            <div class="nav flex-column nav-pills popular-module-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Cryptography</a>
-                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Artificial Intelligence</a>
-                                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">AI + Machine Learning</a>
-                                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Mathematics</a>
-                            </div>
-                        </div>
-                        <div class="col-9">
-                            <div class="tab-content" id="v-pills-tabContent">
-                                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...</div>
-                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-                                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-                                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-right">- Oh yeah, it does that too.</p>
-                </div>
-
-                <p class="lead">
-                    The sandbox also utilizes continuous deployment to Azure to ensure that it stays up-to-date with the repository here. This way, if I add a new module, it's available to the public, not only in source control, but as a working module the community can tinker with, study the code for, and learn from.
-                </p>*@
+            </div>
         </div>
 
         @* Modules *@
@@ -116,7 +80,7 @@
             <div class="row">
                 <div class="col-12">
                     <h1 class="display-4">Modules</h1>
-                    <p class="lead">Sandbox modules can be written in several different languages. The majority of them are written in <code>C#</code>, followed closely by <code>Python</code>, <code>JavaScript</code>, and <code>F#</code>. To get you started, the sandbox automatically loads a list of the most popular modules. You can browse the entire catelog by selecting a language and a category.</p>
+                    <p class="lead">Sandbox modules can be written in several different languages. The majority of them will be written in <code>C#</code>, followed closely by <code>Python</code>, <code>JavaScript</code>, and <code>F#</code>. Currently, the sandbox is still in its infancy; however, this just means that it's growing swiftly. New modules will begin flooding in once support is added for all languages intended to be supported.</p>
                 </div>
             </div>
             <div class="row underline">
@@ -145,21 +109,26 @@
             </div>
             <div class="row pl-3 pr-3">
                 @foreach (var module in Model.DiscoveredModules) {
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 module-container">
-                    <div class="module @module.FriendlyLanguage pl-1 pr-1" onclick="showModuleDetails(this, '@module.ID');">
-                        <p class="lead mb-0">@module.Name</p>
-                        <small>@module.ShortDescription</small>
-                        <div class="badge-collection">
-                            <span class="badge @module.FriendlyLanguage">@module.Language</span>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 module-container">
+                        <div class="module @module.FriendlyLanguage pl-1 pr-1" onclick="showModuleDetails(this, '@module.ID');">
+                            <p class="lead mb-0">@module.Name</p>
+                            <small>@module.ShortDescription</small>
+                            <div class="badge-collection">
+                                <span class="badge @module.FriendlyLanguage">@module.Language</span>
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
             </div>
         </div>
 
         @* Statistics and Events *@
-        <div class="tab-pane" id="event-log" role="tabpanel" aria-labelledby="event-log-tab">This is the event log tab.</div>
+        <div class="tab-pane" id="event-log" role="tabpanel" aria-labelledby="event-log-tab">
+            <h1 class="display-4">Events</h1>
+            <div class="row">
+                <div id="eventList" class="col-12"></div>
+            </div>
+        </div>
 
         @* Module Details *@
         <div class="tab-pane" id="module-details" role="tabpanel" aria-labelledby="module-details-tab">
@@ -189,21 +158,19 @@
         <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
             <h1 class="display-4">Settings</h1>
             <p class="lead">You know, some cool configuration stuff lives here. If you change stuff, stuff might happen!</p>
-            <form>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Display Name</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">This is how you appear to others in the event log and in feedback.</div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Display Name</label>
+                <input type="text" class="form-control" id="displayName" aria-describedby="displayNameHelp">
+                <div id="displayNameHelp" class="form-text">This is how you appear to others in the event log and in feedback.</div>
+            </div>
+            <div class="mb-3">
+                <label for="darkModeToggle" class="form-label">Current Theme</label>
+                <div id="darkModeToggle" class="toggle" aria-describedby="darkModeToggleHelp">
+                    <input type="checkbox" id="theHolyToggle" onchange="toggleDarkMode(this);" checked />
+                    <label class="d-inline-block" for="theHolyToggle"></label>
                 </div>
-                <div class="mb-3">
-                    <label for="darkModeToggle" class="form-label">Current Theme</label>
-                    <div id="darkModeToggle" class="toggle" aria-describedby="darkModeToggleHelp">
-                        <input type="checkbox" id="theHolyToggle" onchange="toggleDarkMode(this);" checked />
-                        <label class="d-inline-block" for="theHolyToggle"></label>
-                    </div>
-                    <div id="darkModeToggleHelp" class="form-text">I wonder what this does?</div>
-                </div>
-            </form>
+                <div id="darkModeToggleHelp" class="form-text">I wonder what this does?</div>
+            </div>
         </div>
 
         @* Feedback *@
@@ -211,39 +178,16 @@
             <div class="row underline pb-3">
                 <h1 class="display-4">Feedback</h1>
                 <p class="lead">Did you enjoy playing in the sandbox today? What module did you like the most? Is there anything you would've done differently? Share your thoughts because, well, reading is fun!</p>
-                <form>
-                    <div class="mb-3">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary float-right">Submit</button>
-                </form>
+                <div class="mb-3">
+                    <textarea class="form-control" id="userFeedback" rows="3"></textarea>
+                </div>
+                <button class="btn btn-primary float-right" onclick="sendFeedback(); return false;">Submit</button>
             </div>
-            <p class="lead mt-3">In case you're curious, those before you have left their mark on the sandbox. Here's what they had to say!</p>
+            <p class="lead mt-3">In case you're curious, others before you have left their mark on the sandbox. Here's what they had to say!</p>
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="col-12 feedback-container">
-                        <div class="feedback">
-                            <small class="underline">Captain Anonymous</small>
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget ex convallis, vehicula mauris in, maximus purus. Nam ipsum erat, tempor eget maximus ac, iaculis eu lorem.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="col-12 feedback-container">
-                        <div class="feedback">
-                            <small class="underline">Captain Anonymous</small>
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget ex convallis, vehicula mauris in, maximus purus. Nam ipsum erat, tempor eget maximus ac, iaculis eu lorem.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="col-12 feedback-container">
-                        <div class="feedback">
-                            <small class="underline">Captain Anonymous</small>
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget ex convallis, vehicula mauris in, maximus purus. Nam ipsum erat, tempor eget maximus ac, iaculis eu lorem.</span>
-                        </div>
-                    </div>
-                </div>
+                <div id="feedbackColumnA" class="col-12 col-md-6 col-lg-4"></div>
+                <div id="feedbackColumnB" class="col-12 col-md-6 col-lg-4"></div>
+                <div id="feedbackColumnC" class="col-12 col-md-6 col-lg-4"></div>
             </div>
         </div>
 
@@ -251,48 +195,7 @@
 </div>
 <script>
     var moduleParameters = undefined;
-    // Fetch Events
-    var eventList = document.getElementById("eventList");
-    var fetchingEvents = false;
-    setInterval(function () {
-        //if (!fetchingEvents) {
-        //    callWebServicePost("/Queue/GetMessages", null, function (result) {
-        //        for (var i = 0; i < result.length; i++) {
-        //            var event = result[i];
-        //            var eventItem = document.createElement("LI");
-        //            eventItem.className = 'event text-left txt-default';
-
-        //            var title = document.createElement("P");
-        //            if (event.owningModule != null && event.owningModule.length > 0)
-        //                title.innerText = event.owningModule;
-        //            else
-        //                title.innerText = 'Unknown Module';
-
-        //            title.classList.add('lead');
-        //            switch (event.eventType) {
-        //                case SandboxEventType.Information: title.classList.add('txt-information'); break;
-        //                case SandboxEventType.Success: title.classList.add('txt-success'); break;
-        //                case SandboxEventType.Warning: title.classList.add('txt-warning'); break;
-        //                case SandboxEventType.Failure: title.classList.add('txt-failure'); break;
-        //                default: title.classList.add('txt-default'); break;
-        //            }
-
-        //            var message = document.createElement("P");
-        //            message.innerText = event.message;
-        //            message.className = 'lead msg';
-
-        //            eventItem.appendChild(title);
-        //            eventItem.appendChild(message);
-        //            eventList.insertBefore(eventItem, eventList.childNodes[0]);
-        //        }
-
-        //        fetchingEvents = false;
-        //    }, function (result) {
-        //        fetchingEvents = false;
-        //    });
-        //}
-    }, 1000);
-
+    var usernameInput = document.getElementById("displayName");
 
     var modulesTab = document.getElementById("modules-tab");
     var modulesTabContent = document.getElementById("modules");
@@ -334,7 +237,7 @@
                 document.getElementById("moduleParameters").innerHTML = result.length < 1 ? "There are no parameters for this module." : "";
                 moduleParameters = result;
                 for (let i = 0; i < result.length; i++)
-                    addParameterToDetailsTab(result[i]);
+                    document.getElementById("moduleParameters").appendChild(createDisplayElementForParameter(result[i]));
 
                 deactivateLoader();
             }, function (result) {
@@ -348,9 +251,8 @@
         detailsTab.classList.add("active");
         detailsTabContent.classList.add("active");
     }
-    function addParameterToDetailsTab(parameter) {
-        document.getElementById("moduleParameters").appendChild(createDisplayElementForParameter(parameter));
-    }
+
+    // Execute the module.
     function execute(sender) {
         activateLoader();
         var moduleID = sender.dataset.moduleid;
@@ -370,15 +272,101 @@
         }
         executeModule({
             id: moduleID,
+            username: usernameInput.value,
             parameters: moduleParameters
         }, function (result) {
-                detailsTab.classList.remove("active");
-                detailsTabContent.classList.remove("active");
-                eventLogTab.classList.add("active");
-                eventLogTabContent.classList.add("active");
-                deactivateLoader();
+            detailsTab.classList.remove("active");
+            detailsTabContent.classList.remove("active");
+            eventLogTab.classList.add("active");
+            eventLogTabContent.classList.add("active");
+            deactivateLoader();
         }, function (result) {
-                deactivateLoader();
+            deactivateLoader();
         });
+    }
+    setInterval(getEvents, 1000);
+    function getEvents() {
+        callWebService("POST", "Queue/GetMessages", null, function (result) {
+            if (result.length > 0) {
+                var container = document.getElementById("eventList");
+                for (var i = 0; i < result.length; i++) {
+                    var eventContainer = document.createElement("DIV");
+                    eventContainer.className = "col-12 feedback-container";
+
+                    var eventItem = document.createElement("DIV");
+                    eventItem.className = "feedback";
+
+                    var eventTypeClass = "";
+                    switch (result[i].eventType) {
+                        case SandboxEventType.Information: eventTypeClass = "sandbox-text-information"; break;
+                        case SandboxEventType.Success: eventTypeClass = "sandbox-text-success"; break;
+                        case SandboxEventType.Warning: eventTypeClass = "sandbox-text-warning"; break;
+                        case SandboxEventType.Failure: eventTypeClass = "sandbox-text-failure"; break;
+                    }
+
+                    var owningModule = document.createElement("SMALL");
+                    owningModule.className = "underline " + eventTypeClass;
+                    owningModule.innerText = result[i].owningModule;
+
+                    var message = document.createElement("SPAN");
+                    message.innerText = result[i].message;
+
+                    eventItem.appendChild(owningModule);
+                    eventItem.appendChild(message);
+                    eventContainer.appendChild(eventItem);
+                    container.insertBefore(eventContainer, container.childNodes[0]);
+                }
+            }
+        }, function (result) {
+
+        });
+    }
+    function sendFeedback() {
+        activateLoader();
+        var feedback = document.getElementById("userFeedback").value;
+        submitFeedback(usernameInput.value, feedback, function (result) {
+            deactivateLoader();
+        }, function (result) {
+            deactivateLoader();
+        });
+    }
+    setInterval(getFeedback, 1000);
+    function getFeedback() {
+        fetchFeedback(function (result) {
+            var feedbackColumnA = document.getElementById("feedbackColumnA");
+            feedbackColumnA.innerHTML = "";
+            createFeedbackItemsForSpecifiedColumn(0, 3, feedbackColumnA, result);
+
+            var feedbackColumnB = document.getElementById("feedbackColumnB");
+            feedbackColumnB.innerHTML = "";
+            createFeedbackItemsForSpecifiedColumn(1, 3, feedbackColumnB, result);
+
+            var feedbackColumnC = document.getElementById("feedbackColumnC");
+            feedbackColumnC.innerHTML = "";
+            createFeedbackItemsForSpecifiedColumn(2, 3, feedbackColumnC, result);
+        }, function (result) {
+
+        });
+    }
+    function createFeedbackItemsForSpecifiedColumn(columnIndex, columnCount, container, data) {
+        for (var i = columnIndex; i < data.length; i += columnCount) {
+            var feedbackContainer = document.createElement("DIV");
+            feedbackContainer.className = "col-12 feedback-container";
+
+            var feedbackItem = document.createElement("DIV");
+            feedbackItem.className = "feedback";
+
+            var author = document.createElement("SMALL");
+            author.className = "underline";
+            author.innerText = data[i].userDisplayName;
+
+            var message = document.createElement("SPAN");
+            message.innerText = data[i].message;
+
+            feedbackItem.appendChild(author);
+            feedbackItem.appendChild(message);
+            feedbackContainer.appendChild(feedbackItem);
+            container.appendChild(feedbackContainer);
+        }
     }
 </script>
