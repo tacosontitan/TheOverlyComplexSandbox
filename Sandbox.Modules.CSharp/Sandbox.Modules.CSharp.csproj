@@ -66,6 +66,7 @@
     <Compile Include="API Integration\TD Ameritrade\TDAmeritradeService.cs" />
     <Compile Include="API Integration\Twilio\TextMessageModule.cs" />
     <Compile Include="Cryptography\AesModule.cs" />
+    <Compile Include="General\EnumFlags.cs" />
     <Compile Include="General\HelloModule.cs" />
     <Compile Include="General\Parameters\EchoModule.cs" />
     <Compile Include="General\Parameters\DisplayElementModule.cs" />
